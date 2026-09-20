@@ -121,7 +121,7 @@
       margin-bottom: 0;
     }
 
-    .summary strong {
+    .summary strong-unused {
       color: var(--text);
       font-weight: 650;
     }
@@ -135,7 +135,7 @@
       line-height: 1.55;
     }
 
-    .tidy strong {
+    .tidy strong-unused {
       display: block;
       margin-bottom: 3px;
       color: var(--text);
@@ -233,7 +233,7 @@
       </div>
 
       <p class="tidy">
-        <strong>We've kept things tidy.</strong>
+        We've kept things tidy.
         Just enough to keep you looking. Not enough to keep you scrolling.
       </p>
     </section>
@@ -293,11 +293,11 @@
     };
 
     const discoveryLabels = {
-      dark: "dark & gritty",
-      weird: "weird & unusual",
-      mindbending: "mind-bending",
-      cult: "cult classics",
-      hidden: "hidden gems"
+      "dark-gritty": "dark and gritty",
+      "weird-unusual": "weird and unusual",
+      "mind-bending": "mind-bending",
+      "cult-classics": "cult classics",
+      "hidden-gems": "hidden gems"
     };
 
     const genres = getStored("simplyStremioGenres", []);
@@ -307,12 +307,13 @@
     const priority = getStored("simplyStremioPriority", []);
     const adventure = sessionStorage.getItem("simplyStremioAdventure") || "balanced";
     const amount = sessionStorage.getItem("simplyStremioAmount") || "selection";
+    const era = sessionStorage.getItem("simplyStremioEra") || "balanced";
 
     const genreNames = genres.map((item) => genreLabels[item] || capitalize(item));
     const discoveryNames = discovery.map((item) => discoveryLabels[item] || item);
 
     const genreSentence = genreNames.length
-      ? `You like <strong>${joinNatural(genreNames)}</strong>, so we'll make sure there's plenty of that around.`
+      ? `You like ${joinNatural(genreNames)}, so we'll make sure there's plenty of that around.`
       : "We'll keep things broad enough to give you plenty to discover.";
 
     const discoverySentence = (() => {
@@ -321,61 +322,47 @@
       }
 
       if (discoveryNames.length === 1) {
-        return ` You're also into <strong>${discoveryNames[0]}</strong>, so we'll look a little further than the obvious picks.`;
+        return ` You're also into ${discoveryNames[0]}, so we'll look a little further than the obvious picks.`;
       }
 
       if (discoveryNames.length <= 3) {
-        return ` You're also into <strong>${joinNatural(discoveryNames)}</strong>, so we'll look a little further than the obvious picks.`;
+        return ` You're also into ${joinNatural(discoveryNames)}, so we'll look a little further than the obvious picks.`;
       }
 
-      return ` You've also got a taste for <strong>${joinNatural(discoveryNames.slice(0, 3))}</strong> and more, so we'll look a little further than the obvious picks.`;
+      return ` You've also got a taste for ${joinNatural(discoveryNames.slice(0, 3))} and more, so we'll look a little further than the obvious picks.`;
     })();
 
-    const rangeSentence = (() => {
-      const eraText = {
-        newer: "mostly newer releases",
-        balanced: "a mix of newer releases and older favourites",
-        classic: "older favourites and the classics",
-        everything: "everything from the latest releases to the classics"
-      }[sessionStorage.getItem("simplyStremioEra") || "balanced"];
+    const eraSentence = {
+      newer: "I see you like to keep things fresh, and that's cool. We'll keep an eye on the latest releases while still leaving room for something worth going back for.",
+      balanced: "I see you like a bit of everything, from newer releases to older favourites. That gives us plenty to work with.",
+      classic: "I see you appreciate some of the classics, and that's cool. We'll make sure the older stuff doesn't get lost behind the latest releases.",
+      everything: "I see you're not too bothered about when something was released. That gives us a pretty wide playground to work with."
+    }[era] || "I see you like a bit of everything, from newer releases to older favourites. That gives us plenty to work with.";
 
-      const internationalText = {
-        english: "mostly English-language movies and shows",
-        international: "international movies and shows",
-        mixed: "both English-language and international movies and shows"
-      }[international] || "both English-language and international movies and shows";
+    const internationalSentence = {
+      english: "You're happy sticking mostly with English-language movies and shows, so we'll keep things close to home.",
+      international: "You're happy exploring beyond English-language movies and shows too, which gives us a much bigger world to play with.",
+      mixed: "You're happy exploring both English-language and international movies and shows, which gives us a much bigger world to play with."
+    }[international] || "You're happy exploring both English-language and international movies and shows, which gives us a much bigger world to play with.";
 
-      let sentence = `You're happy with <strong>${eraText}</strong>, and you're open to <strong>${internationalText}</strong> too.`;
-
-      if (anime) {
-        sentence += " We've also noted that <strong>anime is your thing</strong>, so we'll make sure it gets a place.";
-      }
-
-      return sentence;
-    })();
-
-    const priorityText = (() => {
+    const animeSentence = anime ? " And as anime is your thing, we'll make sure it gets a place too." : "";
+    const prioritySentence = (() => {
       if (priority.includes("mixture") || !priority.length) {
-        return "a nicely mixed starting point";
+        return "When you open Stremio, we'll keep things nicely mixed — a bit of what's popular, a bit of what's new, and a few things chosen because they look like your kind of thing.";
       }
 
       const labels = {
-        popular: "popular picks",
-        new: "new releases",
-        movies: "movies that fit your tastes",
-        series: "series that fit your tastes"
+        popular: "what's popular",
+        new: "what's new",
+        movies: "movies you'd probably enjoy",
+        series: "series you'd probably enjoy"
       };
 
       const selected = priority.map((item) => labels[item]).filter(Boolean);
 
-      if (selected.length >= 4) return "a bit of everything";
-      return joinNatural(selected);
+      if (!selected.length) return "When you open Stremio, we'll keep things nicely mixed, while still leaving room to explore.";
+      return "When you open Stremio, we'll put " + joinNatural(selected) + " near the front, while still leaving room to explore.";
     })();
-
-    const prioritySentence = priority.includes("mixture") || !priority.length
-      ? "When you open Stremio, we'll keep things nicely mixed — a bit of what's popular, a bit of what's new, and a few things chosen because they look like your kind of thing."
-      : `When you open Stremio, we'll put <strong>${priorityText}</strong> near the front, while still leaving room to explore.`;
-
     const adventureSentence = {
       familiar: "We'll keep things mostly familiar, with a few surprises along the way.",
       balanced: "We'll keep a good mix of familiar picks and a few surprises.",
