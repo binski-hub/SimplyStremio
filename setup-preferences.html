@@ -108,9 +108,24 @@
     }
 
     .panel-intro {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 16px;
       margin: 0 0 16px;
       color: var(--text);
       line-height: 1.5;
+    }
+
+    .panel-question {
+      min-width: 0;
+    }
+
+    .panel-count {
+      flex-shrink: 0;
+      color: #777d86;
+      font-size: .78rem;
+      white-space: nowrap;
     }
 
     .choices {
@@ -215,6 +230,10 @@
         grid-template-columns: 1fr;
       }
 
+      .panel-intro {
+        align-items: flex-start;
+      }
+
       .actions {
         flex-direction: column-reverse;
         align-items: stretch;
@@ -250,7 +269,10 @@
 
     <form id="preferencesForm">
       <section class="panel">
-        <p class="panel-intro">Question 1/7: Choose the genres you enjoy most.</p>
+        <div class="panel-intro">
+          <span class="panel-question">Choose the genres you enjoy most.</span>
+          <span class="panel-count">Question 1/7</span>
+        </div>
 
         <div class="choices">
           <div class="choice">
