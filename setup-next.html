@@ -64,6 +64,11 @@
           <a class="button secondary" href="setup-options.html">← Change service</a>
         </div>
       </form>
+
+      <div id="noProviderActions" class="actions" hidden>
+        <a class="button" href="setup-configure.html?provider=none">Continue →</a>
+        <a class="button secondary" href="setup-options.html">← Change service</a>
+      </div>
     </section>
 
     <footer>SimplyStremio is a configuration tool. It does not provide or host media.</footer>
@@ -105,6 +110,14 @@
       document.querySelector("#panelText").textContent = item.panelText;
       document.querySelector("#apiKeyLabel").textContent = item.label;
       document.querySelector("#helpText").textContent = item.help;
+    }
+
+    if (provider === "none") {
+      document.querySelector("#heading").textContent = "Continue without a provider.";
+      document.querySelector("#intro").textContent = "You can continue setting up Stremio without connecting a debrid service.";
+      document.querySelector("#panelText").textContent = "No API key is needed for this option. We'll continue with the rest of your setup.";
+      form.hidden = true;
+      document.querySelector("#noProviderActions").hidden = false;
     }
 
     if (provider !== "torbox") {
