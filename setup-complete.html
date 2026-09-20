@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SimplyStremio — Your setup is ready</title>
+  <style>
+    :root {
+      --bg: #111315;
+      --panel: #191c20;
+      --panel-hover: #20242a;
+      --text: #f3f4f6;
+      --muted: #a8adb5;
+      --border: #30343b;
+      --accent: #c89445;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { min-height: 100%; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    header, main, footer {
+      width: min(760px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    header { padding: 24px 0 12px; }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+
+    .brand {
+      color: var(--text);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: .02em;
+    }
+
+    .step {
+      color: var(--muted);
+      font-size: .85rem;
+    }
+
+    .progress {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px;
+      height: 4px;
+    }
+
+    .progress-step {
+      display: block;
+      height: 100%;
+      border-radius: 999px;
+      background: var(--border);
+    }
+
+    .progress-step.active { background: var(--accent); }
+
+    main { padding: 28px 0 24px; }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--accent);
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 2.7rem);
+      line-height: 1.08;
+      letter-spacing: -.03em;
+    }
+
+    .intro {
+      max-width: 680px;
+      margin: 14px 0 24px;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .panel {
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--panel);
+    }
+
+    .panel-heading {
+      margin: 0 0 18px;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .summary {
+      display: grid;
+      gap: 1px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--border);
+    }
+
+    .summary-row {
+      display: grid;
+      grid-template-columns: 150px minmax(0, 1fr);
+      gap: 18px;
+      padding: 14px 15px;
+      background: var(--panel);
+    }
+
+    .summary-label {
+      color: var(--muted);
+      font-size: .88rem;
+    }
+
+    .summary-value {
+      min-width: 0;
+      color: var(--text);
+      font-size: .92rem;
+      line-height: 1.5;
+    }
+
+    .tidy {
+      margin: 18px 0 0;
+      padding: 15px 16px;
+      border-left: 2px solid var(--accent);
+      color: var(--muted);
+      font-size: .92rem;
+      line-height: 1.55;
+    }
+
+    .tidy strong {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--text);
+      font-size: .95rem;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 14px 20px;
+      border: 1px solid var(--accent);
+      border-radius: 10px;
+      background: var(--accent);
+      color: #17120b;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .button.secondary {
+      border-color: var(--border);
+      background: transparent;
+      color: var(--muted);
+    }
+
+    .button.secondary:hover {
+      border-color: var(--accent);
+      color: var(--text);
+    }
+
+    .note {
+      margin: 14px 0 0;
+      color: #777d86;
+      font-size: .78rem;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    footer {
+      padding: 0 0 28px;
+      color: #777d86;
+      font-size: .78rem;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 620px) {
+      .summary-row {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      header { padding-top: 18px; }
+      main { padding-top: 22px; }
+
+      .actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+      }
+
+      .actions .button {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="topbar">
+      <div class="brand">SimplyStremio</div>
+      <div class="step">Step 4 of 4</div>
+    </div>
+    <div class="progress" aria-label="Setup progress">
+      <span class="progress-step"></span>
+      <span class="progress-step"></span>
+      <span class="progress-step"></span>
+      <span class="progress-step active"></span>
+    </div>
+  </header>
+
+  <main>
+    <p class="eyebrow">That's the boring bit done</p>
+    <h1>Your Stremio setup is ready.</h1>
+    <p class="intro">
+      We've taken what you told us and turned it into a setup that should feel right from the moment you open Stremio.
+    </p>
+
+    <section class="panel">
+      <p class="panel-heading">Here's what we've put together.</p>
+
+      <div class="summary">
+        <div class="summary-row">
+          <div class="summary-label">What you like</div>
+          <div class="summary-value" id="genres">Your favourite genres</div>
+        </div>
+
+        <div class="summary-row">
+          <div class="summary-label">What you'll discover</div>
+          <div class="summary-value" id="discovery">A mix of familiar picks and things worth discovering.</div>
+        </div>
+
+        <div class="summary-row">
+          <div class="summary-label">Beyond the usual</div>
+          <div class="summary-value" id="international">A mixture of English-language and international content.</div>
+        </div>
+
+        <div class="summary-row">
+          <div class="summary-label">How adventurous?</div>
+          <div class="summary-value" id="adventure">A bit of both.</div>
+        </div>
+
+        <div class="summary-row">
+          <div class="summary-label">How much?</div>
+          <div class="summary-value" id="amount">A good selection.</div>
+        </div>
+      </div>
+
+      <p class="tidy">
+        <strong>We've kept things tidy.</strong>
+        Just enough to keep you looking. Not enough to keep you scrolling.
+      </p>
+    </section>
+
+    <div class="actions">
+      <a class="button secondary" href="setup-preferences-amount.html">← Go back a step</a>
+      <button class="button" id="addButton" type="button">Add to Stremio →</button>
+    </div>
+
+    <p class="note">You can always come back and change your preferences later.</p>
+  </main>
+
+  <footer>
+    SimplyStremio is a configuration tool. It does not provide or host media.
+  </footer>
+
+  <script>
+    const getStored = (key, fallback) => {
+      try {
+        const value = sessionStorage.getItem(key);
+        return value ? JSON.parse(value) : fallback;
+      } catch {
+        return fallback;
+      }
+    };
+
+    const titleCase = (value) =>
+      value
+        .replace(/-/g, " ")
+        .replace(/\b\w/g, (letter) => letter.toUpperCase());
+
+    const genres = getStored("simplyStremioGenres", []);
+    const discovery = getStored("simplyStremioDiscovery", []);
+    const international = sessionStorage.getItem("simplyStremioInternational") || "mixed";
+    const anime = sessionStorage.getItem("simplyStremioAnime") === "true";
+    const priority = getStored("simplyStremioPriority", []);
+    const adventure = sessionStorage.getItem("simplyStremioAdventure") || "balanced";
+    const amount = sessionStorage.getItem("simplyStremioAmount") || "selection";
+
+    if (genres.length) {
+      document.querySelector("#genres").textContent = genres.map(titleCase).join(", ");
+    }
+
+    const discoveryLabels = {
+      dark: "Dark & gritty",
+      weird: "Weird & unusual",
+      mindbending: "Mind-bending",
+      cult: "Cult classics",
+      hidden: "Hidden gems"
+    };
+
+    if (discovery.length) {
+      document.querySelector("#discovery").textContent =
+        discovery.map((item) => discoveryLabels[item] || titleCase(item)).join(" · ");
+    }
+
+    const internationalLabels = {
+      english: "Mostly English-language content.",
+      international: "A healthy mix of English-language and international content.",
+      mixed: "A mixture of English-language and international content."
+    };
+
+    document.querySelector("#international").textContent = internationalLabels[international] || internationalLabels.mixed;
+
+    if (anime) {
+      document.querySelector("#international").textContent += " Anime gets a place too.";
+    }
+
+    const adventureLabels = {
+      familiar: "Mostly familiar picks, with a few surprises.",
+      balanced: "A bit of both — familiar picks and a few surprises.",
+      surprise: "Happy to discover things you wouldn't normally pick."
+    };
+
+    document.querySelector("#adventure").textContent = adventureLabels[adventure] || adventureLabels.balanced;
+
+    const amountLabels = {
+      simple: "Just the essentials.",
+      selection: "Plenty to explore, without overwhelming the screen.",
+      everything: "A busy screen is no problem."
+    };
+
+    document.querySelector("#amount").textContent = amountLabels[amount] || amountLabels.selection;
+
+    if (priority.length && !priority.includes("mixture")) {
+      const priorityLabels = {
+        popular: "popular picks",
+        new: "new releases",
+        movies: "movies that fit your tastes",
+        series: "series that fit your tastes"
+      };
+
+      const readable = priority
+        .map((item) => priorityLabels[item])
+        .filter(Boolean);
+
+      if (readable.length) {
+        document.querySelector("#discovery").textContent =
+          "We'll put " + readable.join(", ") + " near the front.";
+      }
+    }
+
+    document.querySelector("#addButton").addEventListener("click", () => {
+      alert("The Stremio install link will be connected here next.");
+    });
+  </script>
+</body>
+</html>
