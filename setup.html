@@ -28,8 +28,10 @@
     .choice span { display: block; margin-top: 5px; color: var(--muted); font-size: 14px; line-height: 1.4; }
     .choice.selected { border-color: var(--accent); }
     .provider-note { margin-top: 24px; color: var(--muted); font-size: 13px; line-height: 1.5; }
+    .continue { display: block; width: 100%; margin-top: 24px; padding: 14px 20px; border: 1px solid var(--border); border-radius: 10px; background: var(--panel); color: var(--muted); font: inherit; font-weight: 700; cursor: not-allowed; }
+    .continue.ready { border-color: var(--accent); background: var(--accent); color: #17120b; cursor: pointer; }
     footer { margin-top: 48px; color: var(--muted); font-size: 13px; }
-    @media (max-width: 600px) { main { padding: 32px 0 48px; } .topbar { margin-bottom: 40px; } .progress { margin-bottom: 40px; } .choice { padding: 18px; } }
+    @media (max-width: 600px) { main { padding: 12px 0 12px; } .topbar { margin-bottom: 40px; } .progress { margin-bottom: 40px; } .choice { padding: 18px; } }
   </style>
 </head>
 <body>
@@ -39,20 +41,33 @@
     <h1>What do you use for your streams?</h1>
     <p class="intro">Choose the service you already have. We'll handle the technical details for you.</p>
     <div class="choices">
-      <button class="choice" type="button"><strong>TorBox</strong><span>I already have a TorBox account.</span></button>
-      <button class="choice" type="button"><strong>Real-Debrid</strong><span>I already have a Real-Debrid account.</span></button>
-      <button class="choice" type="button"><strong>Another service</strong><span>I use a different compatible debrid service.</span></button>
-      <button class="choice" type="button"><strong>I don't have one yet</strong><span>Show me what I need before we continue.</span></button>
+      <button class="choice" type="button" data-provider="torbox"><strong>TorBox</strong><span>I already have a TorBox account.</span></button>
+      <button class="choice" type="button" data-provider="real-debrid"><strong>Real-Debrid</strong><span>I already have a Real-Debrid account.</span></button>
+      <button class="choice" type="button" data-provider="another"><strong>Another service</strong><span>I use a different compatible debrid service.</span></button>
+      <button class="choice" type="button" data-provider="none"><strong>I don't have one yet</strong><span>Show me what I need before we continue.</span></button>
     </div>
     <p class="provider-note">Your choice doesn't lock you in. You can change it later.</p>
+    <button class="continue" id="continueButton" type="button" disabled>Continue →</button>
     <footer>SimplyStremio is a configuration tool. It does not provide or host media.</footer>
   </main>
   <script>
-    document.querySelectorAll(".choice").forEach((choice) => {
+    const choices = document.querySelectorAll(".choice");
+    const continueButton = document.querySelector("#continueButton");
+    let selectedProvider = null;
+
+    choices.forEach((choice) => {
       choice.addEventListener("click", () => {
-        document.querySelectorAll(".choice").forEach((item) => item.classList.remove("selected"));
+        choices.forEach((item) => item.classList.remove("selected"));
         choice.classList.add("selected");
+        selectedProvider = choice.dataset.provider;
+        continueButton.disabled = false;
+        continueButton.classList.add("ready");
       });
+    });
+
+    continueButton.addEventListener("click", () => {
+      if (!selectedProvider) return;
+      window.location.href = "setup-next.html?provider=" + encodeURIComponent(selectedProvider);
     });
   </script>
 </body>
