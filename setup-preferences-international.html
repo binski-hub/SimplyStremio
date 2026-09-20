@@ -129,7 +129,7 @@
           </div>
 
           <div class="choice">
-            <input type="radio" id="anime" name="international" value="anime">
+            <input type="checkbox" id="anime" name="anime" value="anime">
             <label for="anime">
               <h2>I regularly watch anime</h2>
               <p>Make sure anime gets a place too.</p>
@@ -151,22 +151,35 @@
 
   <script>
     const form = document.querySelector("#internationalForm");
-    const choices = [...document.querySelectorAll('input[name="international"]')];
+    const internationalChoices = [...document.querySelectorAll('input[name="international"]')];
+    const animeChoice = document.querySelector("#anime");
     const continueButton = document.querySelector("#continueButton");
 
-    choices.forEach((choice) => {
-      choice.addEventListener("change", () => {
-        continueButton.disabled = false;
-      });
+    function updateContinueState() {
+      continueButton.disabled = !internationalChoices.some((choice) => choice.checked) && !animeChoice.checked;
+    }
+
+    internationalChoices.forEach((choice) => {
+      choice.addEventListener("change", updateContinueState);
     });
+
+    animeChoice.addEventListener("change", updateContinueState);
 
     form.addEventListener("submit", (event) => {
       event.preventDefault();
 
-      const selected = choices.find((choice) => choice.checked);
-      if (!selected) return;
+      const selectedInternational = internationalChoices.find((choice) => choice.checked);
+      const animeSelected = animeChoice.checked;
 
-      sessionStorage.setItem("simplyStremioInternational", selected.value);
+      if (!selectedInternational && !animeSelected) return;
+
+      if (selectedInternational) {
+        sessionStorage.setItem("simplyStremioInternational", selectedInternational.value);
+      } else {
+        sessionStorage.removeItem("simplyStremioInternational");
+      }
+
+      sessionStorage.setItem("simplyStremioAnime", animeSelected ? "true" : "false");
     });
   </script>
 </body>
