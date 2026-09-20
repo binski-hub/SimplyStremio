@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SimplyStremio — How adventurous are you?</title>
+  <style>
+    :root {
+      --bg: #111315;
+      --panel: #191c20;
+      --panel-hover: #20242a;
+      --text: #f3f4f6;
+      --muted: #a8adb5;
+      --border: #30343b;
+      --accent: #c89445;
+    }
+    * { box-sizing: border-box; }
+    html, body { min-height: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    header, main, footer { width: min(760px, calc(100% - 32px)); margin: 0 auto; }
+    header { padding: 24px 0 12px; }
+    .topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; margin-bottom: 14px;
+    }
+    .brand { color: var(--text); font-size: 1rem; font-weight: 700; letter-spacing: .02em; }
+    .step { color: var(--muted); font-size: .85rem; }
+    .progress { height: 4px; border-radius: 999px; background: var(--border); overflow: hidden; }
+    .progress span { display: block; width: 100%; height: 100%; background: var(--accent); }
+    main { padding: 28px 0 24px; }
+    .eyebrow {
+      margin: 0 0 8px; color: var(--accent); font-size: .78rem;
+      font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    }
+    h1 { margin: 0; font-size: clamp(2rem, 5vw, 2.7rem); line-height: 1.08; letter-spacing: -.03em; }
+    .intro {
+      max-width: 680px; margin: 14px 0 24px; color: var(--muted);
+      font-size: 1rem; line-height: 1.6;
+    }
+    .panel { padding: 18px; border: 1px solid var(--border); border-radius: 14px; background: var(--panel); }
+    .panel-intro { margin: 0 0 16px; color: var(--text); line-height: 1.5; }
+    .choices {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .choice { position: relative; }
+    .choice input { position: absolute; opacity: 0; pointer-events: none; }
+    .choice label {
+      display: flex; flex-direction: column; justify-content: center; height: 100%; padding: 13px 15px;
+      border: 1px solid var(--border); border-radius: 10px; color: var(--text);
+      background: transparent; cursor: pointer;
+      transition: border-color .15s ease, background .15s ease;
+    }
+    .choice label:hover { border-color: #555b64; background: var(--panel-hover); }
+    .choice input:checked + label { border-color: var(--accent); background: rgba(200, 148, 69, .10); }
+    .choice input:focus-visible + label { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .choice h2 { margin: 0 0 4px; font-size: 1rem; }
+    .choice p { margin: 0; color: var(--muted); font-size: .88rem; line-height: 1.45; }
+    .actions {
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 12px; margin-top: 18px;
+    }
+    .button {
+      display: inline-block; padding: 14px 20px; border: 1px solid var(--accent);
+      border-radius: 10px; background: var(--accent); color: #17120b;
+      font-weight: 700; text-decoration: none; cursor: pointer;
+    }
+    .button.secondary { border-color: var(--border); background: transparent; color: var(--muted); }
+    .button.secondary:hover { border-color: var(--accent); color: var(--text); }
+    .button:disabled { opacity: .5; cursor: not-allowed; }
+    footer { padding: 0 0 28px; color: #777d86; font-size: .78rem; line-height: 1.5; }
+    @media (max-width: 680px) {
+      .choices { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      header { padding-top: 18px; }
+      main { padding-top: 22px; }
+      .actions { flex-direction: column-reverse; align-items: stretch; }
+      .actions .button { width: 100%; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="topbar">
+      <div class="brand">SimplyStremio</div>
+      <div class="step">Step 4 of 4</div>
+    </div>
+    <div class="progress" aria-label="Setup progress"><span></span></div>
+  </header>
+
+  <main>
+    <p class="eyebrow">A little adventure</p>
+    <h1>How adventurous are you?</h1>
+    <p class="intro">We'll use this to decide how far beyond the obvious choices we should go when putting things in front of you.</p>
+
+    <form id="adventureForm">
+      <section class="panel">
+        <p class="panel-intro">Tell us how much you like discovering something unexpected.</p>
+
+        <div class="choices">
+          <div class="choice">
+            <input type="radio" id="familiar" name="adventure" value="familiar">
+            <label for="familiar">
+              <h2>Keep it familiar</h2>
+              <p>Stick mostly to things I already know I'll like.</p>
+            </label>
+          </div>
+
+          <div class="choice">
+            <input type="radio" id="both" name="adventure" value="both">
+            <label for="both">
+              <h2>A bit of both</h2>
+              <p>Give me some familiar picks and a few surprises.</p>
+            </label>
+          </div>
+
+          <div class="choice">
+            <input type="radio" id="surprise" name="adventure" value="surprise">
+            <label for="surprise">
+              <h2>Surprise me</h2>
+              <p>I'm happy to discover things I wouldn't normally pick.</p>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <div class="actions">
+        <a class="button secondary" href="setup-preferences-priority.html">← Go back a step</a>
+        <button class="button" id="continueButton" type="submit" disabled>Continue →</button>
+      </div>
+    </form>
+  </main>
+
+  <footer>
+    SimplyStremio is a configuration tool. It does not provide or host media.
+  </footer>
+
+  <script>
+    const form = document.querySelector("#adventureForm");
+    const choices = [...document.querySelectorAll('input[name="adventure"]')];
+    const continueButton = document.querySelector("#continueButton");
+
+    function updateContinueState() {
+      continueButton.disabled = !choices.some((choice) => choice.checked);
+    }
+
+    choices.forEach((choice) => {
+      choice.addEventListener("change", updateContinueState);
+    });
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const selected = choices.find((choice) => choice.checked);
+      if (!selected) return;
+
+      sessionStorage.setItem("simplyStremioAdventure", selected.value);
+    });
+  </script>
+</body>
+</html>
