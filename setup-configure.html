@@ -21,17 +21,23 @@
     h1 { margin:0 0 12px; font-size:clamp(36px,7vw,56px); line-height:1; }
     .intro { margin:0; max-width:620px; color:var(--muted); font-size:20px; line-height:1.5; }
     .panel { margin-top:36px; padding:26px; border:1px solid var(--border); border-radius:16px; background:var(--panel); }
-    .panel p { margin:0; color:var(--muted); line-height:1.6; }
+    .panel-intro { margin:0 0 22px; color:var(--muted); line-height:1.6; }
+    .choices { display:grid; gap:12px; }
+    .choice { display:block; padding:20px; border:1px solid var(--border); border-radius:12px; background:#15181b; color:var(--text); text-decoration:none; }
+    .choice:hover { border-color:var(--accent); }
+    .choice h2 { margin:0 0 7px; font-size:20px; }
+    .choice p { margin:0; color:var(--muted); line-height:1.5; }
+    .reassurance { margin:22px 0 0; color:var(--muted); font-size:14px; }
     .actions { display:flex; gap:12px; margin-top:24px; }
-    .button { display:inline-block; padding:14px 20px; border:1px solid var(--accent); border-radius:10px; background:var(--accent); color:#17120b; font-weight:700; text-decoration:none; cursor:pointer; }
-    .button.secondary { border-color:var(--border); background:transparent; color:var(--muted); }
-    .button.secondary:hover { border-color:var(--accent); color:var(--text); }
+    .button { display:inline-block; padding:14px 20px; border:1px solid var(--border); border-radius:10px; background:transparent; color:var(--muted); font-weight:700; text-decoration:none; cursor:pointer; }
+    .button:hover { border-color:var(--accent); color:var(--text); }
     footer { margin-top:48px; color:var(--muted); font-size:13px; }
     @media (max-width:600px) {
       main { padding:12px 0; }
       .topbar { margin-bottom:40px; }
       .progress { margin-bottom:40px; }
       .panel { padding:22px; }
+      .choice { padding:18px; }
       .actions { flex-direction:column; }
       .button { text-align:center; }
     }
@@ -42,15 +48,26 @@
     <div class="topbar"><div class="brand">SimplyStremio</div><div class="step">Step 3 of 4</div></div>
     <div class="progress" aria-hidden="true"><span></span></div>
 
-    <h1>Let's set up your preferences.</h1>
-    <p class="intro">Next, we'll help you choose how you want Stremio to find and show your content.</p>
+    <h1>How much control would you like?</h1>
+    <p class="intro">We'll ask you a few simple questions about how you use Stremio and what you like to watch. Your answers help us build a setup that suits you, without making you wade through technical settings.</p>
 
     <section class="panel">
-      <p>This is where we'll make the choices that shape your SimplyStremio setup.</p>
+      <p class="panel-intro">Choose how involved you'd like to be. You can change these choices later.</p>
+
+      <div class="choices">
+        <a class="choice" href="setup-preferences.html?mode=simple">
+          <h2>Just make it work</h2>
+          <p>We'll choose the sensible settings for you. Just answer a few questions and we'll take care of the rest.</p>
+        </a>
+
+        <a class="choice" href="setup-preferences.html?mode=control">
+          <h2>I'd like more control</h2>
+          <p>Choose what appears in Stremio and how it behaves. We'll still keep the technical stuff out of sight.</p>
+        </a>
+      </div>
 
       <div class="actions">
-        <a class="button" href="#">Continue →</a>
-        <a class="button secondary" href="setup-options.html">← Change service</a>
+        <a class="button" href="setup-options.html">← Change service</a>
       </div>
     </section>
 
