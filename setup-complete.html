@@ -121,11 +121,6 @@
       margin-bottom: 0;
     }
 
-    .summary strong-unused {
-      color: var(--text);
-      font-weight: 650;
-    }
-
     .tidy {
       margin: 20px 0 0;
       padding: 15px 16px;
@@ -133,13 +128,6 @@
       color: var(--muted);
       font-size: .92rem;
       line-height: 1.55;
-    }
-
-    .tidy strong-unused {
-      display: block;
-      margin-bottom: 3px;
-      color: var(--text);
-      font-size: .95rem;
     }
 
     .actions {
@@ -377,7 +365,7 @@
 
     document.querySelector("#summary").innerHTML = `
       <p>${genreSentence}${discoverySentence}</p>
-      <p>${rangeSentence}</p>
+      <p>${eraSentence} ${internationalSentence}${animeSentence}</p>
       <p>${prioritySentence} ${adventureSentence} ${amountSentence}</p>
     `;
 
