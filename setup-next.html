@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="SimplyStremio setup — learn what you need to get started.">
+  <title>SimplyStremio — What you need</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #111315; --panel: #1a1d20; --text: #f3f4f6;
+      --muted: #a7adb4; --accent: #f0b35a; --border: #30343a;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--bg); color: var(--text); }
+    main { width: min(760px, calc(100% - 32px)); margin: 0 auto; padding: 12px 0; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 56px; }
+    .brand { font-size: 14px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); }
+    .step { font-size: 13px; color: var(--muted); }
+    .progress { height: 3px; margin-bottom: 48px; border-radius: 99px; background: var(--border); overflow: hidden; }
+    .progress span { display: block; width: 50%; height: 100%; background: var(--accent); }
+    h1 { margin: 0 0 12px; font-size: clamp(36px, 7vw, 56px); line-height: 1; }
+    .intro { margin: 0; max-width: 620px; color: var(--muted); font-size: 20px; line-height: 1.5; }
+    .panel { margin-top: 36px; padding: 26px; border: 1px solid var(--border); border-radius: 16px; background: var(--panel); }
+    .panel h2 { margin: 0 0 10px; font-size: 22px; }
+    .panel p { margin: 0; color: var(--muted); line-height: 1.6; }
+    .button { display: inline-block; margin-top: 24px; padding: 14px 20px; border: 1px solid var(--accent); border-radius: 10px; background: var(--accent); color: #17120b; font-weight: 700; text-decoration: none; }
+    footer { margin-top: 48px; color: var(--muted); font-size: 13px; }
+    @media (max-width: 600px) {
+      main { padding: 12px 0; }
+      .topbar { margin-bottom: 40px; }
+      .progress { margin-bottom: 40px; }
+      .panel { padding: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="topbar"><div class="brand">SimplyStremio</div><div class="step">Step 2 of 4</div></div>
+    <div class="progress" aria-hidden="true"><span></span></div>
+    <h1>You're almost there.</h1>
+    <p class="intro">You just need one more thing before we can set everything up for you.</p>
+    <section class="panel">
+      <h2>A simple way to get started</h2>
+      <p>A streaming service gives SimplyStremio access to the movies and shows you want to watch. There are several options available, and you can choose the one that suits you.</p>
+      <a class="button" href="#" aria-disabled="true">Show me my options →</a>
+    </section>
+    <footer>SimplyStremio is a configuration tool. It does not provide or host media.</footer>
+  </main>
+</body>
+</html>
