@@ -139,7 +139,7 @@
           </div>
 
           <div class="choice mixture">
-            <input type="radio" id="mixture" name="priorityMode" value="mixture">
+            <input type="checkbox" id="mixture" name="mixture" value="mixture">
             <label for="mixture">
               <h2>Just give me a mixture of everything</h2>
               <p>Don't worry about prioritising one thing over another.</p>
@@ -187,14 +187,11 @@
 
       if (!choices.some((choice) => choice.checked) && !mixtureChoice.checked) return;
 
-      const selected = choices.filter((choice) => choice.checked).map((choice) => choice.value);
+      const selected = mixtureChoice.checked
+        ? ["mixture"]
+        : choices.filter((choice) => choice.checked).map((choice) => choice.value);
 
-      if (mixtureChoice.checked) {
-        sessionStorage.setItem("simplyStremioPriority", JSON.stringify(["mixture"]));
-      } else {
-        sessionStorage.setItem("simplyStremioPriority", JSON.stringify(selected));
-      }
-
+      sessionStorage.setItem("simplyStremioPriority", JSON.stringify(selected));
       window.location.href = "setup-preferences-adventure.html";
     });
   </script>
