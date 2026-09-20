@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SimplyStremio — Choose a service</title>
+  <style>
+    :root {
+      --bg: #101010;
+      --panel: #171717;
+      --panel-hover: #1d1d1d;
+      --border: #2b2b2b;
+      --accent: #c58a3a;
+      --text: #f2f0eb;
+      --muted: #aaa49b;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .topbar {
+      width: min(760px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 20px 0 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .brand {
+      color: var(--text);
+      font-weight: 700;
+      letter-spacing: .02em;
+    }
+
+    .step { color: var(--accent); font-weight: 700; }
+
+    .progress {
+      width: min(760px, calc(100% - 32px));
+      height: 4px;
+      margin: 0 auto;
+      background: var(--border);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress span {
+      display: block;
+      width: 75%;
+      height: 100%;
+      background: var(--accent);
+    }
+
+    main {
+      width: min(760px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 34px 0 28px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(28px, 5vw, 40px);
+      line-height: 1.1;
+    }
+
+    .intro {
+      margin: 0 0 24px;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.5;
+    }
+
+    .options {
+      display: grid;
+      gap: 12px;
+    }
+
+    .option {
+      display: block;
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--panel);
+      color: var(--text);
+      text-decoration: none;
+      transition: border-color .15s ease, background .15s ease;
+    }
+
+    .option:hover {
+      border-color: var(--accent);
+      background: var(--panel-hover);
+    }
+
+    .option h2 {
+      margin: 0 0 7px;
+      font-size: 19px;
+    }
+
+    .option p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .note {
+      margin: 20px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .back {
+      display: inline-block;
+      margin-top: 24px;
+      padding: 12px 18px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .back:hover {
+      border-color: var(--accent);
+      color: var(--text);
+    }
+
+    footer {
+      width: min(760px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 0 0 20px;
+      color: #77736d;
+      font-size: 12px;
+    }
+
+    @media (max-width: 600px) {
+      main { padding-top: 26px; }
+      .option { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="brand">SimplyStremio</div>
+    <div class="step">Step 3 of 4</div>
+  </div>
+
+  <div class="progress"><span></span></div>
+
+  <main>
+    <h1>Choose a service to get started.</h1>
+    <p class="intro">These services can give Stremio access to the movies and shows you want to watch. Pick the one that suits you.</p>
+
+    <div class="options">
+      <a class="option" href="#">
+        <h2>TorBox</h2>
+        <p>A simple option if you're new to this.</p>
+      </a>
+
+      <a class="option" href="#">
+        <h2>Real-Debrid</h2>
+        <p>A popular option used with Stremio.</p>
+      </a>
+
+      <a class="option" href="#">
+        <h2>Another compatible service</h2>
+        <p>Already have something else in mind? You can use a different compatible service.</p>
+      </a>
+    </div>
+
+    <p class="note">Not sure which one to choose? That's okay — we'll keep the setup simple.</p>
+
+    <a class="back" href="setup-next.html?provider=none">← Return to Setup</a>
+  </main>
+
+  <footer>SimplyStremio is a configuration tool. It does not provide or host media.</footer>
+</body>
+</html>
