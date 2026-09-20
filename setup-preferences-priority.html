@@ -54,7 +54,23 @@
       font-size: 1rem; line-height: 1.6;
     }
     .panel { padding: 18px; border: 1px solid var(--border); border-radius: 14px; background: var(--panel); }
-    .panel-intro { margin: 0 0 16px; color: var(--text); line-height: 1.5; }
+    .panel-intro {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 16px;
+      margin: 0 0 16px;
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .panel-question { min-width: 0; }
+    .panel-count {
+      flex-shrink: 0;
+      color: #777d86;
+      font-size: .78rem;
+      white-space: nowrap;
+    }
     .choices {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -93,6 +109,10 @@
       main { padding-top: 22px; }
       .choices { grid-template-columns: 1fr; }
       .choice.mixture { grid-column: auto; }
+      .panel-intro {
+        align-items: flex-start;
+      }
+
       .actions { flex-direction: column-reverse; align-items: stretch; }
       .actions .button { width: 100%; text-align: center; }
     }
@@ -119,7 +139,10 @@
 
     <form id="priorityForm">
       <section class="panel">
-        <p class="panel-intro">Question 5/7: Pick anything you'd like us to put near the front.</p>
+        <div class="panel-intro">
+          <span class="panel-question">Pick anything you'd like us to put near the front.</span>
+          <span class="panel-count">Question 5/7</span>
+        </div>
 
         <div class="choices">
           <div class="choice">
