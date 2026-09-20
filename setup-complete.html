@@ -306,7 +306,7 @@
       }
 
       if (genreNames.length > 3) {
-        return "Variety is the spice of life, so we'll keep the menu interesting.";
+        return "You clearly like a bit of variety, and that's cool. Variety is the spice of life, so we'll keep the menu interesting.";
       }
 
       return `You told us you're into ${joinNatural(genreNames)}, so we'll make sure there's plenty of that around.`;
@@ -368,7 +368,7 @@
     const amountSentence = {
       simple: "You've asked us to keep things simple, so we'll stick to the essentials.",
       selection: "You've gone for a good selection, so there should be plenty to choose from without turning the place into a catalogue.",
-      everything: "You don't mind a busy screen, so we'll give you plenty to choose from."
+      everything: "Because you don't mind a busy screen, we'll make sure you have plenty to choose from."
     }[amount] || "We'll keep things nicely balanced.";
 
     document.querySelector("#summary").innerHTML = `
