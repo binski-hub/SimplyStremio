@@ -33,6 +33,7 @@
     .button { display: inline-block; padding: 14px 20px; border: 1px solid var(--accent); border-radius: 10px; background: var(--accent); color: #17120b; font-weight: 700; text-decoration: none; cursor: pointer; }
     .button.secondary { border-color: var(--border); background: transparent; color: var(--muted); }
     .button.secondary:hover { border-color: var(--accent); color: var(--text); }
+    .button:disabled { opacity: .5; cursor: not-allowed; }
     footer { margin-top: 48px; color: var(--muted); font-size: 13px; }
     @media (max-width: 600px) {
       main { padding: 12px 0; }
@@ -74,6 +75,9 @@
     const provider = new URLSearchParams(window.location.search).get("provider");
     const form = document.querySelector("#providerForm");
     const apiKey = document.querySelector("#apiKey");
+    const apiKeyLabel = document.querySelector("#apiKeyLabel");
+    const helpText = document.querySelector("#helpText");
+    const continueButton = document.querySelector("#continueButton");
 
     const details = {
       torbox: {
@@ -86,9 +90,9 @@
       "real-debrid": {
         heading: "Let's connect Real-Debrid.",
         intro: "Stremio just needs a few details from your Real-Debrid account. We'll take care of the technical setup for you.",
-        panelText: "Enter your Real-Debrid details below. We'll use them to build your Stremio setup.",
-        label: "API Key",
-        help: "We'll add the Real-Debrid connection details here next."
+        panelText: "We'll connect your Real-Debrid account securely. You won't need to enter your Real-Debrid password or API key here.",
+        label: "",
+        help: "You'll be taken to Real-Debrid to authorize SimplyStremio. Your login details stay with Real-Debrid."
       },
       another: {
         heading: "Let's connect your service.",
@@ -104,17 +108,24 @@
       document.querySelector("#heading").textContent = item.heading;
       document.querySelector("#intro").textContent = item.intro;
       document.querySelector("#panelText").textContent = item.panelText;
-      document.querySelector("#apiKeyLabel").textContent = item.label;
-      document.querySelector("#helpText").textContent = item.help;
+      apiKeyLabel.textContent = item.label;
+      helpText.textContent = item.help;
+    }
+
+    if (provider === "real-debrid") {
+      apiKey.hidden = true;
+      apiKeyLabel.hidden = true;
+      continueButton.textContent = "Connect Real-Debrid →";
+      continueButton.disabled = true;
     }
 
     if (provider === "none") {
       document.querySelector("#heading").textContent = "Continue without a provider.";
       document.querySelector("#intro").textContent = "You can continue setting up Stremio without connecting a debrid service. Before you continue, please make sure you research what using Stremio without a provider means for you.";
       document.querySelector("#panelText").textContent = "No API key is needed for this option.";
-      form.querySelector("#apiKey").hidden = true;
-      form.querySelector("#apiKeyLabel").hidden = true;
-      form.querySelector("#helpText").hidden = true;
+      apiKey.hidden = true;
+      apiKeyLabel.hidden = true;
+      helpText.hidden = true;
     }
 
     if (provider !== "torbox") {
@@ -124,8 +135,11 @@
 
     form.addEventListener("submit", (event) => {
       event.preventDefault();
+
       if (provider !== "torbox") {
-        window.location.href = "setup-configure.html?provider=none";
+        if (provider === "none") {
+          window.location.href = "setup-configure.html?provider=none";
+        }
         return;
       }
 
