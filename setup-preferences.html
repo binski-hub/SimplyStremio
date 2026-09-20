@@ -327,8 +327,7 @@
         .map((checkbox) => checkbox.value);
 
       sessionStorage.setItem("simplyStremioGenres", JSON.stringify(genres));
-
-      // Next preference screen will be wired here.
+      window.location.href = "setup-preferences-backroom.html";
     });
   </script>
 </body>
