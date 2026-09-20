@@ -63,6 +63,7 @@
     .choice input:focus-visible + label { outline: 2px solid var(--accent); outline-offset: 2px; }
     .choice h2 { margin: 0 0 4px; font-size: 1rem; }
     .choice p { margin: 0; color: var(--muted); font-size: .88rem; line-height: 1.45; }
+    .choice.mixture { grid-column: 1 / -1; }
     .actions {
       display: flex; justify-content: space-between; align-items: center;
       gap: 12px; margin-top: 18px;
@@ -80,6 +81,7 @@
       header { padding-top: 18px; }
       main { padding-top: 22px; }
       .choices { grid-template-columns: 1fr; }
+      .choice.mixture { grid-column: auto; }
       .actions { flex-direction: column-reverse; align-items: stretch; }
       .actions .button { width: 100%; text-align: center; }
     }
@@ -101,11 +103,11 @@
 
     <form id="priorityForm">
       <section class="panel">
-        <p class="panel-intro">Choose what you'd like to have at the front of the queue.</p>
+        <p class="panel-intro">Pick anything you'd like us to put near the front.</p>
 
         <div class="choices">
           <div class="choice">
-            <input type="radio" id="popular" name="priority" value="popular">
+            <input type="checkbox" id="popular" name="priority" value="popular">
             <label for="popular">
               <h2>What's popular</h2>
               <p>Show me what everyone is watching.</p>
@@ -113,7 +115,7 @@
           </div>
 
           <div class="choice">
-            <input type="radio" id="new" name="priority" value="new">
+            <input type="checkbox" id="new" name="priority" value="new">
             <label for="new">
               <h2>What's new</h2>
               <p>Keep me up to date with the latest releases.</p>
@@ -121,7 +123,7 @@
           </div>
 
           <div class="choice">
-            <input type="radio" id="movies" name="priority" value="movies">
+            <input type="checkbox" id="movies" name="priority" value="movies">
             <label for="movies">
               <h2>Movies I'd probably enjoy</h2>
               <p>Put things in front of me based on my tastes.</p>
@@ -129,18 +131,18 @@
           </div>
 
           <div class="choice">
-            <input type="radio" id="series" name="priority" value="series">
+            <input type="checkbox" id="series" name="priority" value="series">
             <label for="series">
               <h2>Series I'd probably enjoy</h2>
               <p>Show me series that fit what I like.</p>
             </label>
           </div>
 
-          <div class="choice">
-            <input type="radio" id="mixture" name="priority" value="mixture">
+          <div class="choice mixture">
+            <input type="radio" id="mixture" name="priorityMode" value="mixture">
             <label for="mixture">
-              <h2>A mixture of everything</h2>
-              <p>Give me a balanced selection to explore.</p>
+              <h2>Just give me a mixture of everything</h2>
+              <p>Don't worry about prioritising one thing over another.</p>
             </label>
           </div>
         </div>
@@ -160,23 +162,39 @@
   <script>
     const form = document.querySelector("#priorityForm");
     const choices = [...document.querySelectorAll('input[name="priority"]')];
+    const mixtureChoice = document.querySelector("#mixture");
     const continueButton = document.querySelector("#continueButton");
 
     function updateContinueState() {
-      continueButton.disabled = !choices.some((choice) => choice.checked);
+      continueButton.disabled = !choices.some((choice) => choice.checked) && !mixtureChoice.checked;
     }
 
     choices.forEach((choice) => {
       choice.addEventListener("change", updateContinueState);
     });
 
+    mixtureChoice.addEventListener("change", () => {
+      if (mixtureChoice.checked) {
+        choices.forEach((choice) => {
+          choice.checked = false;
+        });
+      }
+      updateContinueState();
+    });
+
     form.addEventListener("submit", (event) => {
       event.preventDefault();
 
-      const selected = choices.find((choice) => choice.checked);
-      if (!selected) return;
+      if (!choices.some((choice) => choice.checked) && !mixtureChoice.checked) return;
 
-      sessionStorage.setItem("simplyStremioPriority", selected.value);
+      const selected = choices.filter((choice) => choice.checked).map((choice) => choice.value);
+
+      if (mixtureChoice.checked) {
+        sessionStorage.setItem("simplyStremioPriority", JSON.stringify(["mixture"]));
+      } else {
+        sessionStorage.setItem("simplyStremioPriority", JSON.stringify(selected));
+      }
+
       window.location.href = "setup-preferences-adventure.html";
     });
   </script>
