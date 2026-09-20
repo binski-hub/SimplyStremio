@@ -144,68 +144,6 @@
       line-height: 1.5;
     }
 
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 10;
-      padding: 20px;
-      background: rgba(0, 0, 0, .72);
-      align-items: center;
-      justify-content: center;
-    }
-
-    .modal.open { display: flex; }
-
-    .modal-box {
-      width: min(520px, 100%);
-      padding: 28px;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      background: var(--panel);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, .45);
-    }
-
-    .modal-box h2 {
-      margin: 0 0 12px;
-      font-size: 24px;
-    }
-
-    .modal-box p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.55;
-    }
-
-    .modal-actions {
-      display: flex;
-      gap: 12px;
-      margin-top: 24px;
-    }
-
-    .modal-button {
-      flex: 1;
-      padding: 13px 18px;
-      border: 1px solid var(--accent);
-      border-radius: 10px;
-      background: var(--accent);
-      color: #17120b;
-      font: inherit;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .modal-button.secondary {
-      border-color: var(--border);
-      background: transparent;
-      color: var(--muted);
-    }
-
-    .modal-button.secondary:hover {
-      border-color: var(--accent);
-      color: var(--text);
-    }
-
     footer {
       width: min(760px, calc(100% - 32px));
       margin: 0 auto;
@@ -258,43 +196,10 @@
 
   <footer>SimplyStremio is a configuration tool. It does not provide or host media.</footer>
 
-  <div class="modal" id="noProviderModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div class="modal-box">
-      <h2 id="modalTitle">Before you continue</h2>
-      <p>Please research on what Stremio without a provider means for you.</p>
-
-      <div class="modal-actions">
-        <button class="modal-button" id="continueWithoutProvider" type="button">Continue</button>
-        <button class="modal-button secondary" id="returnToProviders" type="button">Return to Select Provider</button>
-      </div>
-    </div>
-  </div>
 
   <script>
-    const modal = document.querySelector("#noProviderModal");
-    const noProviderButton = document.querySelector("#noProviderButton");
-    const continueButton = document.querySelector("#continueWithoutProvider");
-    const returnButton = document.querySelector("#returnToProviders");
-
-    noProviderButton.addEventListener("click", () => {
-      modal.classList.add("open");
-      continueButton.focus();
-    });
-
-    continueButton.addEventListener("click", () => {
+    document.querySelector("#noProviderButton").addEventListener("click", () => {
       window.location.href = "setup-next.html?provider=none";
-    });
-
-    returnButton.addEventListener("click", () => {
-      modal.classList.remove("open");
-      noProviderButton.focus();
-    });
-
-    modal.addEventListener("click", (event) => {
-      if (event.target === modal) {
-        modal.classList.remove("open");
-        noProviderButton.focus();
-      }
     });
   </script>
 </body>
