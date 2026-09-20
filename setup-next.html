@@ -22,7 +22,6 @@
     h1 { margin: 0 0 12px; font-size: clamp(36px, 7vw, 56px); line-height: 1; }
     .intro { margin: 0; max-width: 620px; color: var(--muted); font-size: 20px; line-height: 1.5; }
     .panel { margin-top: 36px; padding: 26px; border: 1px solid var(--border); border-radius: 16px; background: var(--panel); }
-    .panel h2 { margin: 0 0 10px; font-size: 22px; }
     .panel p { margin: 0; color: var(--muted); line-height: 1.6; }
     .actions { display: flex; gap: 12px; margin-top: 24px; }
     .button { display: inline-block; padding: 14px 20px; border: 1px solid var(--accent); border-radius: 10px; background: var(--accent); color: #17120b; font-weight: 700; text-decoration: none; }
@@ -43,11 +42,10 @@
   <main>
     <div class="topbar"><div class="brand">SimplyStremio</div><div class="step">Step 2 of 4</div></div>
     <div class="progress" aria-hidden="true"><span></span></div>
-    <h1 id="heading">You're almost there.</h1>
-    <p class="intro" id="intro">You just need one more thing before we can set everything up for you.</p>
+    <h1 id="heading">Why Choose a Streaming Service?</h1>
+    <p class="intro" id="intro">A streaming service can give Stremio access to the movies and shows you want to watch.</p>
     <section class="panel">
-      <h2 id="panelHeading">A simple way to get started</h2>
-      <p id="panelText">A streaming service gives Stremio access to the movies and shows you want to watch. There are several options available, and you can choose the one that suits you.</p>
+      <p id="panelText">There are several options available, and you can choose the one that suits you.</p>
       <div class="actions">
         <a class="button" id="actionButton" href="setup-options.html">Show me my options →</a>
         <a class="button secondary" href="setup.html">← Return to Setup</a>
@@ -62,21 +60,18 @@
       torbox: {
         heading: "Great — let's get you connected.",
         intro: "We'll help you connect the service you already use, then take care of the rest.",
-        panelHeading: "TorBox",
         panelText: "We'll guide you through the few details SimplyStremio needs to get everything ready.",
         button: "Continue →"
       },
       "real-debrid": {
         heading: "Great — let's get you connected.",
         intro: "We'll help you connect the service you already use, then take care of the rest.",
-        panelHeading: "Real-Debrid",
         panelText: "We'll guide you through the few details SimplyStremio needs to get everything ready.",
         button: "Continue →"
       },
       another: {
         heading: "Great — let's get you connected.",
         intro: "We'll help you connect the service you already use, then take care of the rest.",
-        panelHeading: "Your service",
         panelText: "We'll help you choose your service and guide you through the few details SimplyStremio needs.",
         button: "Choose my service →"
       }
@@ -86,7 +81,6 @@
       const item = details[provider];
       document.querySelector("#heading").textContent = item.heading;
       document.querySelector("#intro").textContent = item.intro;
-      document.querySelector("#panelHeading").textContent = item.panelHeading;
       document.querySelector("#panelText").textContent = item.panelText;
       document.querySelector("#actionButton").textContent = item.button;
       document.querySelector("#actionButton").setAttribute("aria-disabled", "true");
