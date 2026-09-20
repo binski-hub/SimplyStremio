@@ -30,8 +30,19 @@
     }
     .brand { color: var(--text); font-size: 1rem; font-weight: 700; letter-spacing: .02em; }
     .step { color: var(--muted); font-size: .85rem; }
-    .progress { height: 4px; border-radius: 999px; background: var(--border); overflow: hidden; }
-    .progress span { display: block; width: 100%; height: 100%; background: var(--accent); }
+    .progress {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px;
+      height: 4px;
+    }
+    .progress-step {
+      display: block;
+      height: 100%;
+      border-radius: 999px;
+      background: var(--border);
+    }
+    .progress-step.active { background: var(--accent); }
     main { padding: 28px 0 24px; }
     .eyebrow {
       margin: 0 0 8px; color: var(--accent); font-size: .78rem;
