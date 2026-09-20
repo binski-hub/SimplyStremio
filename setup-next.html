@@ -24,13 +24,18 @@
     .panel { margin-top: 36px; padding: 26px; border: 1px solid var(--border); border-radius: 16px; background: var(--panel); }
     .panel h2 { margin: 0 0 10px; font-size: 22px; }
     .panel p { margin: 0; color: var(--muted); line-height: 1.6; }
-    .button { display: inline-block; margin-top: 24px; padding: 14px 20px; border: 1px solid var(--accent); border-radius: 10px; background: var(--accent); color: #17120b; font-weight: 700; text-decoration: none; }
+    .actions { display: flex; gap: 12px; margin-top: 24px; }
+    .button { display: inline-block; padding: 14px 20px; border: 1px solid var(--accent); border-radius: 10px; background: var(--accent); color: #17120b; font-weight: 700; text-decoration: none; }
+    .button.secondary { border-color: var(--border); background: transparent; color: var(--muted); }
+    .button.secondary:hover { border-color: var(--accent); color: var(--text); }
     footer { margin-top: 48px; color: var(--muted); font-size: 13px; }
     @media (max-width: 600px) {
       main { padding: 12px 0; }
       .topbar { margin-bottom: 40px; }
       .progress { margin-bottom: 40px; }
       .panel { padding: 22px; }
+      .actions { flex-direction: column; }
+      .button { text-align: center; }
     }
   </style>
 </head>
@@ -42,8 +47,11 @@
     <p class="intro" id="intro">You just need one more thing before we can set everything up for you.</p>
     <section class="panel">
       <h2 id="panelHeading">A simple way to get started</h2>
-      <p id="panelText">A streaming service gives SimplyStremio access to the movies and shows you want to watch. There are several options available, and you can choose the one that suits you.</p>
-      <a class="button" id="actionButton" href="#">Show me my options →</a>
+      <p id="panelText">A streaming service gives Stremio access to the movies and shows you want to watch. There are several options available, and you can choose the one that suits you.</p>
+      <div class="actions">
+        <a class="button" id="actionButton" href="#">Show me my options →</a>
+        <a class="button secondary" href="setup.html">← Return to Setup</a>
+      </div>
     </section>
     <footer>SimplyStremio is a configuration tool. It does not provide or host media.</footer>
   </main>
