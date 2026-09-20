@@ -170,7 +170,12 @@
     }
 
     choices.forEach((choice) => {
-      choice.addEventListener("change", updateContinueState);
+      choice.addEventListener("change", () => {
+        if (choice.checked) {
+          mixtureChoice.checked = false;
+        }
+        updateContinueState();
+      });
     });
 
     mixtureChoice.addEventListener("change", () => {
