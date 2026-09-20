@@ -31,16 +31,10 @@
     .brand { color: var(--text); font-size: 1rem; font-weight: 700; letter-spacing: .02em; }
     .step { color: var(--muted); font-size: .85rem; }
     .progress {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 4px;
-      height: 4px;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; height: 4px;
     }
     .progress-step {
-      display: block;
-      height: 100%;
-      border-radius: 999px;
-      background: var(--border);
+      display: block; height: 100%; border-radius: 999px; background: var(--border);
     }
     .progress-step.active { background: var(--accent); }
     main { padding: 28px 0 24px; }
@@ -55,34 +49,20 @@
     }
     .panel { padding: 18px; border: 1px solid var(--border); border-radius: 14px; background: var(--panel); }
     .panel-intro {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 16px;
-      margin: 0 0 16px;
-      color: var(--text);
-      line-height: 1.5;
+      display: flex; justify-content: space-between; align-items: baseline;
+      gap: 16px; margin: 0 0 16px; color: var(--text); line-height: 1.5;
     }
-
     .panel-question { min-width: 0; }
-    .panel-count {
-      flex-shrink: 0;
-      color: #777d86;
-      font-size: .78rem;
-      white-space: nowrap;
-    }
+    .panel-count { flex-shrink: 0; color: #777d86; font-size: .78rem; white-space: nowrap; }
     .choices {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
+      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px;
     }
     .choice { position: relative; }
     .choice input { position: absolute; opacity: 0; pointer-events: none; }
     .choice label {
       display: flex; flex-direction: column; justify-content: center; height: 100%; padding: 13px 15px;
       border: 1px solid var(--border); border-radius: 10px; color: var(--text);
-      background: transparent; cursor: pointer;
-      transition: border-color .15s ease, background .15s ease;
+      background: transparent; cursor: pointer; transition: border-color .15s ease, background .15s ease;
     }
     .choice label:hover { border-color: #555b64; background: var(--panel-hover); }
     .choice input:checked + label { border-color: var(--accent); background: rgba(200, 148, 69, .10); }
@@ -102,16 +82,11 @@
     .button.secondary:hover { border-color: var(--accent); color: var(--text); }
     .button:disabled { opacity: .5; cursor: not-allowed; }
     footer { padding: 0 0 28px; color: #777d86; font-size: .78rem; line-height: 1.5; }
-    @media (max-width: 680px) {
-      .choices { grid-template-columns: 1fr; }
-    }
+    @media (max-width: 680px) { .choices { grid-template-columns: 1fr; } }
     @media (max-width: 560px) {
       header { padding-top: 18px; }
       main { padding-top: 22px; }
-      .panel-intro {
-        align-items: flex-start;
-      }
-
+      .panel-intro { align-items: flex-start; }
       .actions { flex-direction: column-reverse; align-items: stretch; }
       .actions .button { width: 100%; text-align: center; }
     }
@@ -201,6 +176,7 @@
       if (!selected) return;
 
       sessionStorage.setItem("simplyStremioAmount", selected.value);
+      window.location.href = "setup-complete.html";
     });
   </script>
 </body>
