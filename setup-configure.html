@@ -23,22 +23,34 @@
     .panel { margin-top:36px; padding:14px; border:1px solid var(--border); border-radius:16px; background:var(--panel); }
     .panel-intro { margin:0 0 22px; color:var(--muted); line-height:1.6; }
     .choices { display:grid; gap:12px; }
-    .choice { display:block; padding:20px; border:1px solid var(--border); border-radius:12px; background:#15181b; color:var(--text); text-decoration:none; }
-    .choice:hover { border-color:var(--accent); }
+    .choice { position:relative; }
+    .choice input { position:absolute; opacity:0; pointer-events:none; }
+    .choice label {
+      display:block; padding:20px; border:1px solid var(--border); border-radius:12px;
+      background:#15181b; color:var(--text); cursor:pointer;
+      transition:border-color .15s ease, background .15s ease;
+    }
+    .choice label:hover { border-color:var(--accent); }
+    .choice input:checked + label { border-color:var(--accent); background:rgba(240,179,90,.10); }
+    .choice input:focus-visible + label { outline:2px solid var(--accent); outline-offset:2px; }
     .choice h2 { margin:0 0 7px; font-size:20px; }
     .choice p { margin:0; color:var(--muted); line-height:1.5; }
-    .reassurance { margin:22px 0 0; color:var(--muted); font-size:14px; }
-    .actions { display:flex; gap:12px; margin-top:24px; }
-    .button { display:inline-block; padding:14px 20px; border:1px solid var(--border); border-radius:10px; background:transparent; color:var(--muted); font-weight:700; text-decoration:none; cursor:pointer; }
+    .actions { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:24px; }
+    .button {
+      display:inline-block; padding:14px 20px; border:1px solid var(--border); border-radius:10px;
+      background:transparent; color:var(--muted); font-weight:700; text-decoration:none; cursor:pointer;
+    }
     .button:hover { border-color:var(--accent); color:var(--text); }
+    .button.primary { border-color:var(--accent); background:var(--accent); color:#17120b; }
+    .button.primary:disabled { opacity:.5; cursor:not-allowed; }
     footer { margin-top:48px; color:var(--muted); font-size:13px; }
     @media (max-width:600px) {
       main { padding:12px 0; }
       .topbar { margin-bottom:40px; }
       .progress { margin-bottom:40px; }
       .panel { padding:14px; }
-      .choice { padding:18px; }
-      .actions { flex-direction:column; }
+      .choice label { padding:18px; }
+      .actions { flex-direction:column-reverse; align-items:stretch; }
       .button { text-align:center; }
     }
   </style>
@@ -51,27 +63,58 @@
     <h1>How much control would you like?</h1>
     <p class="intro">We'll ask you a few simple questions about how you use Stremio and what you like to watch. Your answers help us build a setup that suits you, without making you wade through technical settings.</p>
 
-    <section class="panel">
-      <p class="panel-intro">Choose how involved you'd like to be. You can change these choices later.</p>
+    <form id="modeForm">
+      <section class="panel">
+        <p class="panel-intro">Choose how involved you'd like to be. You can change these choices later.</p>
 
-      <div class="choices">
-        <a class="choice" href="setup-preferences.html?mode=simple">
-          <h2>Just make it work</h2>
-          <p>We'll choose the sensible settings for you. Just answer a few questions and we'll take care of the rest.</p>
-        </a>
+        <div class="choices">
+          <div class="choice">
+            <input type="radio" id="simple" name="mode" value="simple">
+            <label for="simple">
+              <h2>Just make it work</h2>
+              <p>We'll choose the sensible settings for you. Just answer a few questions and we'll take care of the rest.</p>
+            </label>
+          </div>
 
-        <a class="choice" href="setup-preferences.html?mode=control">
-          <h2>I'd like more control</h2>
-          <p>Choose what appears in Stremio and how it behaves. We'll still keep the technical stuff out of sight.</p>
-        </a>
-      </div>
+          <div class="choice">
+            <input type="radio" id="control" name="mode" value="control">
+            <label for="control">
+              <h2>I'd like more control</h2>
+              <p>Choose what appears in Stremio and how it behaves. We'll still keep the technical stuff out of sight.</p>
+            </label>
+          </div>
+        </div>
 
-      <div class="actions">
-        <a class="button" href="setup-options.html">← Go back a step</a>
-      </div>
-    </section>
+        <div class="actions">
+          <a class="button" href="setup-options.html">← Go back a step</a>
+          <button class="button primary" id="continueButton" type="submit" disabled>Continue →</button>
+        </div>
+      </section>
+    </form>
 
     <footer>SimplyStremio is a configuration tool. It does not provide or host media.</footer>
   </main>
+
+  <script>
+    const form = document.querySelector("#modeForm");
+    const choices = [...document.querySelectorAll('input[name="mode"]')];
+    const continueButton = document.querySelector("#continueButton");
+
+    choices.forEach((choice) => {
+      choice.addEventListener("change", () => {
+        continueButton.disabled = false;
+      });
+    });
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const selected = choices.find((choice) => choice.checked);
+      if (!selected) return;
+
+      sessionStorage.setItem("simplyStremioMode", selected.value);
+      window.location.href = "setup-preferences.html?mode=" + encodeURIComponent(selected.value);
+    });
+  </script>
 </body>
 </html>
