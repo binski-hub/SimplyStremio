@@ -44,11 +44,16 @@
     }
     .panel { padding: 18px; border: 1px solid var(--border); border-radius: 14px; background: var(--panel); }
     .panel-intro { margin: 0 0 16px; color: var(--text); line-height: 1.5; }
-    .choices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .choices {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-auto-rows: 1fr;
+      gap: 10px;
+    }
     .choice { position: relative; }
     .choice input { position: absolute; opacity: 0; pointer-events: none; }
     .choice label {
-      display: flex; flex-direction: column; justify-content: center; min-height: 82px; padding: 13px 15px;
+      display: flex; flex-direction: column; justify-content: center; height: 100%; padding: 13px 15px;
       border: 1px solid var(--border); border-radius: 10px; color: var(--text);
       background: transparent; cursor: pointer;
       transition: border-color .15s ease, background .15s ease;
