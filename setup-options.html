@@ -6,13 +6,14 @@
   <title>SimplyStremio — Choose a service</title>
   <style>
     :root {
-      --bg: #101010;
-      --panel: #171717;
-      --panel-hover: #1d1d1d;
-      --border: #2b2b2b;
-      --accent: #c58a3a;
-      --text: #f2f0eb;
-      --muted: #aaa49b;
+      color-scheme: dark;
+      --bg: #111315;
+      --panel: #1a1d20;
+      --panel-hover: #1d2024;
+      --border: #30343a;
+      --accent: #f0b35a;
+      --text: #f3f4f6;
+      --muted: #a7adb4;
     }
 
     * { box-sizing: border-box; }
@@ -22,7 +23,7 @@
       min-height: 100vh;
       background: var(--bg);
       color: var(--text);
-      font-family: Arial, Helvetica, sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
     .topbar {
@@ -33,29 +34,33 @@
       justify-content: space-between;
       align-items: center;
       color: var(--muted);
-      font-size: 14px;
     }
 
     .brand {
-      color: var(--text);
+      color: var(--accent);
+      font-size: 14px;
       font-weight: 700;
-      letter-spacing: .02em;
+      letter-spacing: .16em;
+      text-transform: uppercase;
     }
 
-    .step { color: var(--accent); font-weight: 700; }
+    .step {
+      font-size: 13px;
+      color: var(--muted);
+    }
 
     .progress {
       width: min(760px, calc(100% - 32px));
-      height: 4px;
-      margin: 0 auto;
+      height: 3px;
+      margin: 0 auto 48px;
       background: var(--border);
-      border-radius: 999px;
+      border-radius: 99px;
       overflow: hidden;
     }
 
     .progress span {
       display: block;
-      width: 75%;
+      width: 25%;
       height: 100%;
       background: var(--accent);
     }
@@ -63,7 +68,7 @@
     main {
       width: min(760px, calc(100% - 32px));
       margin: 0 auto;
-      padding: 34px 0 28px;
+      padding: 0 0 28px;
     }
 
     h1 {
@@ -205,16 +210,14 @@
       width: min(760px, calc(100% - 32px));
       margin: 0 auto;
       padding: 0 0 20px;
-      color: #77736d;
-      font-size: 12px;
+      color: var(--muted);
+      font-size: 13px;
     }
 
     @media (max-width: 600px) {
-      main { padding-top: 26px; }
+      main { padding-bottom: 28px; }
       .option { padding: 18px; }
-
       .modal-box { padding: 24px; }
-
       .modal-actions { flex-direction: column; }
     }
   </style>
@@ -222,7 +225,7 @@
 <body>
   <div class="topbar">
     <div class="brand">SimplyStremio</div>
-    <div class="step">Step 3 of 4</div>
+    <div class="step">Step 1 of 4</div>
   </div>
 
   <div class="progress"><span></span></div>
