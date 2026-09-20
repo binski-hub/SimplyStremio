@@ -221,8 +221,8 @@
       </div>
 
       <p class="tidy">
-        We've kept things tidy.
-        Just enough to keep you looking. Not enough to keep you scrolling.
+        We've kept things simple.<br>
+        Because you're not watching if you're scrolling.
       </p>
     </section>
 
@@ -328,9 +328,9 @@
     }[era] || "I see you like a bit of everything, from newer releases to older favourites. That gives us plenty to work with.";
 
     const internationalSentence = {
-      english: "You're happy sticking mostly with English-language movies and shows, so we'll keep things close to home.",
+      "mostly-english": "You're happy sticking mostly with English-language movies and shows, so we'll keep things close to home.",
       international: "You're happy exploring beyond English-language movies and shows too, which gives us a much bigger world to play with.",
-      mixed: "You're happy exploring both English-language and international movies and shows, which gives us a much bigger world to play with."
+      mixture: "You're happy exploring both English-language and international movies and shows, which gives us a much bigger world to play with."
     }[international] || "You're happy exploring both English-language and international movies and shows, which gives us a much bigger world to play with.";
 
     const animeSentence = anime ? " And as anime is your thing, we'll make sure it gets a place too." : "";
@@ -352,7 +352,7 @@
       return "When you open Stremio, we'll put " + joinNatural(selected) + " near the front, while still leaving room to explore.";
     })();
     const adventureSentence = {
-      familiar: "We'll keep things mostly familiar, with a few surprises along the way.",
+      familiar: "Familiarity is important, and we get that. We'll keep things mostly familiar, with a few surprises along the way.",
       balanced: "We'll keep a good mix of familiar picks and a few surprises.",
       surprise: "You're happy to discover things you wouldn't normally pick, so we'll leave a little more room for the unexpected."
     }[adventure] || "We'll keep a good mix of familiar picks and a few surprises.";
