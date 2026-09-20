@@ -297,7 +297,7 @@
 
       <div class="actions">
         <a class="button secondary" href="setup-configure.html">← Go back a step</a>
-        <button class="button" id="continueButton" type="submit" disabled>Continue →</button>
+        <button class="button" id="continueButton" type="button" disabled>Continue →</button>
       </div>
     </form>
   </main>
@@ -307,7 +307,6 @@
   </footer>
 
   <script>
-    const form = document.querySelector("#preferencesForm");
     const checkboxes = [...document.querySelectorAll('input[name="genre"]')];
     const continueButton = document.querySelector("#continueButton");
 
@@ -319,12 +318,12 @@
       checkbox.addEventListener("change", updateContinueState);
     });
 
-    form.addEventListener("submit", (event) => {
-      event.preventDefault();
-
+    continueButton.addEventListener("click", () => {
       const genres = checkboxes
         .filter((checkbox) => checkbox.checked)
         .map((checkbox) => checkbox.value);
+
+      if (!genres.length) return;
 
       sessionStorage.setItem("simplyStremioGenres", JSON.stringify(genres));
       window.location.href = "setup-preferences-backroom.html";
