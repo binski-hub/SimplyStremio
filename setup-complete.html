@@ -300,24 +300,32 @@
     const genreNames = genres.map((item) => genreLabels[item] || capitalize(item));
     const discoveryNames = discovery.map((item) => discoveryLabels[item] || item);
 
-    const genreSentence = genreNames.length
-      ? `You told us you're into ${joinNatural(genreNames)}, so we'll make sure there's plenty of that around.`
-      : "We'll keep things broad enough to give you plenty to discover.";
+    const genreSentence = (() => {
+      if (!genreNames.length) {
+        return "We'll keep things broad enough to give you plenty to discover.";
+      }
+
+      if (genreNames.length > 3) {
+        return "Variety is the spice of life, so we'll keep the menu interesting.";
+      }
+
+      return `You told us you're into ${joinNatural(genreNames)}, so we'll make sure there's plenty of that around.`;
+    })();
 
     const discoverySentence = (() => {
       if (!discoveryNames.length) {
         return "";
       }
 
+      if (discoveryNames.length > 3) {
+        return " You've also got a taste for the oddities, so we'll look beyond the usual suspects.";
+      }
+
       if (discoveryNames.length === 1) {
         return ` You're also into ${discoveryNames[0]}, so we'll look a little further than the obvious picks.`;
       }
 
-      if (discoveryNames.length <= 3) {
-        return ` You're also into ${joinNatural(discoveryNames)}, so we'll look a little further than the obvious picks.`;
-      }
-
-      return ` You've also got a taste for ${joinNatural(discoveryNames.slice(0, 3))} and more, so we'll look a little further than the obvious picks.`;
+      return ` You're also into ${joinNatural(discoveryNames)}, so we'll look a little further than the obvious picks.`;
     })();
 
     const eraSentence = {
