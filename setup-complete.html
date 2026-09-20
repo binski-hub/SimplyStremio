@@ -301,7 +301,7 @@
     const discoveryNames = discovery.map((item) => discoveryLabels[item] || item);
 
     const genreSentence = genreNames.length
-      ? `You like ${joinNatural(genreNames)}, so we'll make sure there's plenty of that around.`
+      ? `You told us you're into ${joinNatural(genreNames)}, so we'll make sure there's plenty of that around.`
       : "We'll keep things broad enough to give you plenty to discover.";
 
     const discoverySentence = (() => {
@@ -329,11 +329,11 @@
 
     const internationalSentence = {
       "mostly-english": "You're happy sticking mostly with English-language movies and shows, so we'll keep things close to home.",
-      international: "You're happy exploring beyond English-language movies and shows too, which gives us a much bigger world to play with.",
-      mixture: "You're happy exploring both English-language and international movies and shows, which gives us a much bigger world to play with."
-    }[international] || "You're happy exploring both English-language and international movies and shows, which gives us a much bigger world to play with.";
+      international: "You're happy exploring beyond English-language movies and shows, which gives us a much bigger range to play with.",
+      mixture: "You're happy exploring both English-language and international movies and shows, which gives us a much bigger range to play with."
+    }[international] || "You're happy exploring both English-language and international movies and shows, which gives us a much bigger range to play with.";
 
-    const animeSentence = anime ? " And as anime is your thing, we'll make sure it gets a place too." : "";
+    const animeSentence = anime ? " Anime is your thing too. From classics to the ones you probably haven't heard of yet, there's a whole other world hiding in there." : "";
     const prioritySentence = (() => {
       if (priority.includes("mixture") || !priority.length) {
         return "When you open Stremio, we'll keep things nicely mixed — a bit of what's popular, a bit of what's new, and a few things chosen because they look like your kind of thing.";
@@ -359,8 +359,8 @@
 
     const amountSentence = {
       simple: "You've asked us to keep things simple, so we'll stick to the essentials.",
-      selection: "You've gone for a good selection, so there should be plenty to explore without turning the place into a catalogue.",
-      everything: "You don't mind a busy screen, so we'll give you plenty to explore."
+      selection: "You've gone for a good selection, so there should be plenty to choose from without turning the place into a catalogue.",
+      everything: "You don't mind a busy screen, so we'll give you plenty to choose from."
     }[amount] || "We'll keep things nicely balanced.";
 
     document.querySelector("#summary").innerHTML = `
