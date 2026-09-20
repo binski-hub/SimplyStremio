@@ -54,7 +54,23 @@
       font-size: 1rem; line-height: 1.6;
     }
     .panel { padding: 18px; border: 1px solid var(--border); border-radius: 14px; background: var(--panel); }
-    .panel-intro { margin: 0 0 16px; color: var(--text); line-height: 1.5; }
+    .panel-intro {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 16px;
+      margin: 0 0 16px;
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .panel-question { min-width: 0; }
+    .panel-count {
+      flex-shrink: 0;
+      color: #777d86;
+      font-size: .78rem;
+      white-space: nowrap;
+    }
     .choices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
     .choice { position: relative; }
     .choice input { position: absolute; opacity: 0; pointer-events: none; }
@@ -84,6 +100,10 @@
       header { padding-top: 18px; }
       main { padding-top: 22px; }
       .choices { grid-template-columns: 1fr; }
+      .panel-intro {
+        align-items: flex-start;
+      }
+
       .actions { flex-direction: column-reverse; align-items: stretch; }
       .actions .button { width: 100%; text-align: center; }
     }
@@ -110,7 +130,10 @@
 
     <form id="preferencesForm">
       <section class="panel">
-        <p class="panel-intro">Question 2/7: Pick any that sound like your kind of thing.</p>
+        <div class="panel-intro">
+          <span class="panel-question">Pick any that sound like your kind of thing.</span>
+          <span class="panel-count">Question 2/7</span>
+        </div>
 
         <div class="choices">
           <div class="choice">
