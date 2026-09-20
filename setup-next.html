@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="SimplyStremio setup — learn what you need to get started.">
-  <title>SimplyStremio — What you need</title>
+  <meta name="description" content="SimplyStremio setup — your next step.">
+  <title>SimplyStremio — Next step</title>
   <style>
     :root {
       color-scheme: dark;
@@ -38,14 +38,51 @@
   <main>
     <div class="topbar"><div class="brand">SimplyStremio</div><div class="step">Step 2 of 4</div></div>
     <div class="progress" aria-hidden="true"><span></span></div>
-    <h1>You're almost there.</h1>
-    <p class="intro">You just need one more thing before we can set everything up for you.</p>
+    <h1 id="heading">You're almost there.</h1>
+    <p class="intro" id="intro">You just need one more thing before we can set everything up for you.</p>
     <section class="panel">
-      <h2>A simple way to get started</h2>
-      <p>A streaming service gives SimplyStremio access to the movies and shows you want to watch. There are several options available, and you can choose the one that suits you.</p>
-      <a class="button" href="#" aria-disabled="true">Show me my options →</a>
+      <h2 id="panelHeading">A simple way to get started</h2>
+      <p id="panelText">A streaming service gives SimplyStremio access to the movies and shows you want to watch. There are several options available, and you can choose the one that suits you.</p>
+      <a class="button" id="actionButton" href="#">Show me my options →</a>
     </section>
     <footer>SimplyStremio is a configuration tool. It does not provide or host media.</footer>
   </main>
+  <script>
+    const provider = new URLSearchParams(window.location.search).get("provider");
+
+    const details = {
+      torbox: {
+        heading: "Great — let's get you connected.",
+        intro: "We'll help you connect the service you already use, then take care of the rest.",
+        panelHeading: "TorBox",
+        panelText: "We'll guide you through the few details SimplyStremio needs to get everything ready.",
+        button: "Continue →"
+      },
+      "real-debrid": {
+        heading: "Great — let's get you connected.",
+        intro: "We'll help you connect the service you already use, then take care of the rest.",
+        panelHeading: "Real-Debrid",
+        panelText: "We'll guide you through the few details SimplyStremio needs to get everything ready.",
+        button: "Continue →"
+      },
+      another: {
+        heading: "Great — let's get you connected.",
+        intro: "We'll help you connect the service you already use, then take care of the rest.",
+        panelHeading: "Your service",
+        panelText: "We'll help you choose your service and guide you through the few details SimplyStremio needs.",
+        button: "Choose my service →"
+      }
+    };
+
+    if (details[provider]) {
+      const item = details[provider];
+      document.querySelector("#heading").textContent = item.heading;
+      document.querySelector("#intro").textContent = item.intro;
+      document.querySelector("#panelHeading").textContent = item.panelHeading;
+      document.querySelector("#panelText").textContent = item.panelText;
+      document.querySelector("#actionButton").textContent = item.button;
+      document.querySelector("#actionButton").setAttribute("aria-disabled", "true");
+    }
+  </script>
 </body>
 </html>
