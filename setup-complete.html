@@ -8,7 +8,6 @@
     :root {
       --bg: #111315;
       --panel: #191c20;
-      --panel-hover: #20242a;
       --text: #f3f4f6;
       --muted: #a8adb5;
       --border: #30343b;
@@ -109,36 +108,26 @@
     }
 
     .summary {
-      display: grid;
-      gap: 1px;
-      overflow: hidden;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      background: var(--border);
-    }
-
-    .summary-row {
-      display: grid;
-      grid-template-columns: 150px minmax(0, 1fr);
-      gap: 18px;
-      padding: 14px 15px;
-      background: var(--panel);
-    }
-
-    .summary-label {
       color: var(--muted);
-      font-size: .88rem;
+      font-size: .96rem;
+      line-height: 1.7;
     }
 
-    .summary-value {
-      min-width: 0;
+    .summary p {
+      margin: 0 0 16px;
+    }
+
+    .summary p:last-child {
+      margin-bottom: 0;
+    }
+
+    .summary strong {
       color: var(--text);
-      font-size: .92rem;
-      line-height: 1.5;
+      font-weight: 650;
     }
 
     .tidy {
-      margin: 18px 0 0;
+      margin: 20px 0 0;
       padding: 15px 16px;
       border-left: 2px solid var(--accent);
       color: var(--muted);
@@ -199,13 +188,6 @@
       line-height: 1.5;
     }
 
-    @media (max-width: 620px) {
-      .summary-row {
-        grid-template-columns: 1fr;
-        gap: 4px;
-      }
-    }
-
     @media (max-width: 560px) {
       header { padding-top: 18px; }
       main { padding-top: 22px; }
@@ -246,31 +228,8 @@
     <section class="panel">
       <p class="panel-heading">Here's what we've put together.</p>
 
-      <div class="summary">
-        <div class="summary-row">
-          <div class="summary-label">What you like</div>
-          <div class="summary-value" id="genres">Your favourite genres</div>
-        </div>
-
-        <div class="summary-row">
-          <div class="summary-label">What you'll discover</div>
-          <div class="summary-value" id="discovery">A mix of familiar picks and things worth discovering.</div>
-        </div>
-
-        <div class="summary-row">
-          <div class="summary-label">Beyond the usual</div>
-          <div class="summary-value" id="international">A mixture of English-language and international content.</div>
-        </div>
-
-        <div class="summary-row">
-          <div class="summary-label">How adventurous?</div>
-          <div class="summary-value" id="adventure">A bit of both.</div>
-        </div>
-
-        <div class="summary-row">
-          <div class="summary-label">How much?</div>
-          <div class="summary-value" id="amount">A good selection.</div>
-        </div>
+      <div class="summary" id="summary">
+        <p>We've got a pretty good idea of what you're after.</p>
       </div>
 
       <p class="tidy">
@@ -301,10 +260,45 @@
       }
     };
 
-    const titleCase = (value) =>
-      value
-        .replace(/-/g, " ")
-        .replace(/\b\w/g, (letter) => letter.toUpperCase());
+    const joinNatural = (items) => {
+      const values = items.filter(Boolean);
+      if (values.length <= 1) return values[0] || "";
+      if (values.length === 2) return values.join(" and ");
+      return values.slice(0, -1).join(", ") + ", and " + values[values.length - 1];
+    };
+
+    const joinWithAnd = (items) => {
+      const values = items.filter(Boolean);
+      if (values.length <= 1) return values[0] || "";
+      if (values.length === 2) return values.join(" and ");
+      return values.slice(0, -1).join(", ") + " and " + values[values.length - 1];
+    };
+
+    const capitalize = (value) =>
+      value.charAt(0).toUpperCase() + value.slice(1);
+
+    const genreLabels = {
+      action: "Action",
+      comedy: "Comedy",
+      crime: "Crime",
+      drama: "Drama",
+      horror: "Horror",
+      mystery: "Mystery",
+      romance: "Romance",
+      "sci-fi": "Sci-Fi",
+      thriller: "Thriller",
+      documentary: "Documentary",
+      animation: "Animation",
+      fantasy: "Fantasy"
+    };
+
+    const discoveryLabels = {
+      dark: "dark & gritty",
+      weird: "weird & unusual",
+      mindbending: "mind-bending",
+      cult: "cult classics",
+      hidden: "hidden gems"
+    };
 
     const genres = getStored("simplyStremioGenres", []);
     const discovery = getStored("simplyStremioDiscovery", []);
@@ -314,68 +308,91 @@
     const adventure = sessionStorage.getItem("simplyStremioAdventure") || "balanced";
     const amount = sessionStorage.getItem("simplyStremioAmount") || "selection";
 
-    if (genres.length) {
-      document.querySelector("#genres").textContent = genres.map(titleCase).join(", ");
-    }
+    const genreNames = genres.map((item) => genreLabels[item] || capitalize(item));
+    const discoveryNames = discovery.map((item) => discoveryLabels[item] || item);
 
-    const discoveryLabels = {
-      dark: "Dark & gritty",
-      weird: "Weird & unusual",
-      mindbending: "Mind-bending",
-      cult: "Cult classics",
-      hidden: "Hidden gems"
-    };
+    const genreSentence = genreNames.length
+      ? `You like <strong>${joinNatural(genreNames)}</strong>, so we'll make sure there's plenty of that around.`
+      : "We'll keep things broad enough to give you plenty to discover.";
 
-    if (discovery.length) {
-      document.querySelector("#discovery").textContent =
-        discovery.map((item) => discoveryLabels[item] || titleCase(item)).join(" · ");
-    }
+    const discoverySentence = (() => {
+      if (!discoveryNames.length) {
+        return "";
+      }
 
-    const internationalLabels = {
-      english: "Mostly English-language content.",
-      international: "A healthy mix of English-language and international content.",
-      mixed: "A mixture of English-language and international content."
-    };
+      if (discoveryNames.length === 1) {
+        return ` You're also into <strong>${discoveryNames[0]}</strong>, so we'll look a little further than the obvious picks.`;
+      }
 
-    document.querySelector("#international").textContent = internationalLabels[international] || internationalLabels.mixed;
+      if (discoveryNames.length <= 3) {
+        return ` You're also into <strong>${joinNatural(discoveryNames)}</strong>, so we'll look a little further than the obvious picks.`;
+      }
 
-    if (anime) {
-      document.querySelector("#international").textContent += " Anime gets a place too.";
-    }
+      return ` You've also got a taste for <strong>${joinNatural(discoveryNames.slice(0, 3))}</strong> and more, so we'll look a little further than the obvious picks.`;
+    })();
 
-    const adventureLabels = {
-      familiar: "Mostly familiar picks, with a few surprises.",
-      balanced: "A bit of both — familiar picks and a few surprises.",
-      surprise: "Happy to discover things you wouldn't normally pick."
-    };
+    const rangeSentence = (() => {
+      const eraText = {
+        newer: "mostly newer releases",
+        balanced: "a mix of newer releases and older favourites",
+        classic: "older favourites and the classics",
+        everything: "everything from the latest releases to the classics"
+      }[sessionStorage.getItem("simplyStremioEra") || "balanced"];
 
-    document.querySelector("#adventure").textContent = adventureLabels[adventure] || adventureLabels.balanced;
+      const internationalText = {
+        english: "mostly English-language movies and shows",
+        international: "international movies and shows",
+        mixed: "both English-language and international movies and shows"
+      }[international] || "both English-language and international movies and shows";
 
-    const amountLabels = {
-      simple: "Just the essentials.",
-      selection: "Plenty to explore, without overwhelming the screen.",
-      everything: "A busy screen is no problem."
-    };
+      let sentence = `You're happy with <strong>${eraText}</strong>, and you're open to <strong>${internationalText}</strong> too.`;
 
-    document.querySelector("#amount").textContent = amountLabels[amount] || amountLabels.selection;
+      if (anime) {
+        sentence += " We've also noted that <strong>anime is your thing</strong>, so we'll make sure it gets a place.";
+      }
 
-    if (priority.length && !priority.includes("mixture")) {
-      const priorityLabels = {
+      return sentence;
+    })();
+
+    const priorityText = (() => {
+      if (priority.includes("mixture") || !priority.length) {
+        return "a nicely mixed starting point";
+      }
+
+      const labels = {
         popular: "popular picks",
         new: "new releases",
         movies: "movies that fit your tastes",
         series: "series that fit your tastes"
       };
 
-      const readable = priority
-        .map((item) => priorityLabels[item])
-        .filter(Boolean);
+      const selected = priority.map((item) => labels[item]).filter(Boolean);
 
-      if (readable.length) {
-        document.querySelector("#discovery").textContent =
-          "We'll put " + readable.join(", ") + " near the front.";
-      }
-    }
+      if (selected.length >= 4) return "a bit of everything";
+      return joinNatural(selected);
+    })();
+
+    const prioritySentence = priority.includes("mixture") || !priority.length
+      ? "When you open Stremio, we'll keep things nicely mixed — a bit of what's popular, a bit of what's new, and a few things chosen because they look like your kind of thing."
+      : `When you open Stremio, we'll put <strong>${priorityText}</strong> near the front, while still leaving room to explore.`;
+
+    const adventureSentence = {
+      familiar: "We'll keep things mostly familiar, with a few surprises along the way.",
+      balanced: "We'll keep a good mix of familiar picks and a few surprises.",
+      surprise: "You're happy to discover things you wouldn't normally pick, so we'll leave a little more room for the unexpected."
+    }[adventure] || "We'll keep a good mix of familiar picks and a few surprises.";
+
+    const amountSentence = {
+      simple: "You've asked us to keep things simple, so we'll stick to the essentials.",
+      selection: "You've gone for a good selection, so there should be plenty to explore without turning the place into a catalogue.",
+      everything: "You don't mind a busy screen, so we'll give you plenty to explore."
+    }[amount] || "We'll keep things nicely balanced.";
+
+    document.querySelector("#summary").innerHTML = `
+      <p>${genreSentence}${discoverySentence}</p>
+      <p>${rangeSentence}</p>
+      <p>${prioritySentence} ${adventureSentence} ${amountSentence}</p>
+    `;
 
     document.querySelector("#addButton").addEventListener("click", () => {
       alert("The Stremio install link will be connected here next.");
