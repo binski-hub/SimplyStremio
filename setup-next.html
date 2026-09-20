@@ -60,15 +60,10 @@
         <p class="help" id="helpText">You can find your API key in your TorBox account settings.</p>
 
         <div class="actions">
-          <button class="button" type="submit">Continue →</button>
+          <button class="button" type="submit" id="continueButton">Continue →</button>
           <a class="button secondary" href="setup-options.html">← Change service</a>
         </div>
       </form>
-
-      <div id="noProviderActions" class="actions" hidden>
-        <a class="button" href="setup-configure.html?provider=none">Continue →</a>
-        <a class="button secondary" href="setup-options.html">← Change service</a>
-      </div>
     </section>
 
     <footer>SimplyStremio is a configuration tool. It does not provide or host media.</footer>
@@ -116,8 +111,9 @@
       document.querySelector("#heading").textContent = "Continue without a provider.";
       document.querySelector("#intro").textContent = "You can continue setting up Stremio without connecting a debrid service.";
       document.querySelector("#panelText").textContent = "No API key is needed for this option. Before you continue, please make sure you research what using Stremio without a provider means for you.";
-      form.hidden = true;
-      document.querySelector("#noProviderActions").hidden = false;
+      form.querySelector("#apiKey").hidden = true;
+      form.querySelector("#apiKeyLabel").hidden = true;
+      form.querySelector("#helpText").hidden = true;
     }
 
     if (provider !== "torbox") {
@@ -127,7 +123,14 @@
 
     form.addEventListener("submit", (event) => {
       event.preventDefault();
-      if (provider !== "torbox") return;
+      if (provider !== "torbox") {
+        window.location.href = "setup-configure.html?provider=none";
+        return;
+      }
+
+      if (!apiKey.value.trim()) return;
+      sessionStorage.setItem("simplyStremioProvider", provider);
+      sessionStorage.setItem("simplyStremioApiKey", apiKey.value.trim());
       window.location.href = "setup-configure.html?provider=" + encodeURIComponent(provider);
     });
   </script>
