@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SimplyStremio · Advanced Setup</title>
+<style>
+    :root{--bg:#111315;--panel:#191c20;--panel-hover:#20242a;--text:#f3f4f6;--muted:#a8adb5;--border:#30343b;--accent:#c89445}
+    *{box-sizing:border-box}html,body{min-height:100%}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    header,main,footer{width:min(760px,calc(100% - 32px));margin:0 auto}header{padding:24px 0 12px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:14px}.brand{font-size:14px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}.step{color:var(--muted);font-size:.85rem}
+    .progress{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;height:4px}.progress-step{border-radius:999px;background:var(--border)}.progress-step.active{background:var(--accent)}
+    main{padding:28px 0 24px}.page-heading{display:flex;justify-content:space-between;align-items:baseline;gap:16px}.eyebrow{margin:0 0 8px;color:var(--accent);font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}.page-count{flex-shrink:0;color:#777d86;font-size:.78rem;white-space:nowrap}h1{margin:0;font-size:clamp(2rem,5vw,2.7rem);line-height:1.08;letter-spacing:-.03em}.intro{max-width:680px;margin:14px 0 24px;color:var(--muted);font-size:1rem;line-height:1.6}
+    .panel{padding:18px;margin-bottom:12px;border:1px solid var(--border);border-radius:14px;background:var(--panel)}
+    .question{margin:0 0 14px;line-height:1.5}.hint{margin:0 0 16px;color:var(--muted);font-size:.82rem;line-height:1.5}
+    .choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.choice{position:relative}.choice input{position:absolute;opacity:0;pointer-events:none}.choice label{display:flex;align-items:center;min-height:54px;padding:13px 15px;border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:.15s}.choice label:hover{border-color:#555b64;background:var(--panel-hover)}.choice input:checked+label{border-color:var(--accent);background:rgba(200,148,69,.1)}.choice input:focus-visible+label{outline:2px solid var(--accent);outline-offset:2px}
+    .actions{display:flex;justify-content:space-between;gap:12px;margin-top:18px}.button{display:inline-block;padding:14px 20px;border:1px solid var(--accent);border-radius:10px;background:var(--accent);color:#17120b;font-weight:700;text-decoration:none;cursor:pointer}.button.secondary{border-color:var(--border);background:transparent;color:var(--muted)}.button.secondary:hover{border-color:var(--accent);color:var(--text)}
+    footer{padding:0 0 28px;color:#777d86;font-size:.78rem;line-height:1.5}
+    @media(max-width:560px){header{padding-top:18px}main{padding-top:22px}.choices{grid-template-columns:1fr}.page-heading{align-items:flex-start}.actions{flex-direction:column-reverse}.actions .button{width:100%;text-align:center}}
+  </style>
+</head>
+<body>
+<header><div class="topbar"><div class="brand">SimplyStremio</div><div class="step">Step 3 of 4</div></div><div class="progress" aria-label="Setup progress">
+  <span class="progress-step"></span><span class="progress-step"></span><span class="progress-step active"></span><span class="progress-step"></span>
+</div></header>
+<main>
+<div class="page-heading"><p class="eyebrow">Spoilt for choice</p><span class="page-count">5 of 7</span></div>
+<h1>What makes a release a good one for you?</h1>
+<p class="intro">There can be quite a few versions of the same film or episode. Tell us what you tend to look for, and we'll do the sorting for you.</p>
+
+<section class="panel">
+<h2 class="question">When there are several versions, what would you rather have?</h2>
+<p class="hint">We'll use this to understand how much you value quality, size, and the balance between them.</p>
+<div class="choices">
+<div class="choice"><input type="radio" name="releasePreference" id="release-quality" value="quality"><label for="release-quality">Give me the highest-quality release</label></div>
+<div class="choice"><input type="radio" name="releasePreference" id="release-balance" value="balanced"><label for="release-balance">Give me the best balance of quality and size</label></div>
+<div class="choice"><input type="radio" name="releasePreference" id="release-compact" value="compact"><label for="release-compact">Give me a good-quality release without huge files</label></div>
+<div class="choice"><input type="radio" name="releasePreference" id="release-strongest" value="strongest"><label for="release-strongest">Just show me the strongest options</label></div>
+</div>
+</section>
+
+<section class="panel">
+<h2 class="question">If two releases are both good, what should break the tie?</h2>
+<p class="hint">Sometimes several releases are close. This helps us decide what should get the nod.</p>
+<div class="choices">
+<div class="choice"><input type="radio" name="releaseTieBreaker" id="tie-picture" value="picture"><label for="tie-picture">The one with the better picture</label></div>
+<div class="choice"><input type="radio" name="releaseTieBreaker" id="tie-source" value="source"><label for="tie-source">The one from the better source</label></div>
+<div class="choice"><input type="radio" name="releaseTieBreaker" id="tie-size" value="size"><label for="tie-size">The smaller one</label></div>
+<div class="choice"><input type="radio" name="releaseTieBreaker" id="tie-none" value="none"><label for="tie-none">Don't worry about it — choose for me</label></div>
+</div>
+</section>
+
+<section class="panel">
+<h2 class="question">How much patience do you have for the perfect release?</h2>
+<p class="hint">We'll use this to decide how readily we should fall back to other good options.</p>
+<div class="choices">
+<div class="choice"><input type="radio" name="releaseFallback" id="fallback-best" value="best-match"><label for="fallback-best">Show me the best match, even if there aren't many</label></div>
+<div class="choice"><input type="radio" name="releaseFallback" id="fallback-alternatives" value="alternatives"><label for="fallback-alternatives">Give me a few good alternatives too</label></div>
+<div class="choice"><input type="radio" name="releaseFallback" id="fallback-useful" value="useful"><label for="fallback-useful">Don't make me wait — show me useful options</label></div>
+<div class="choice"><input type="radio" name="releaseFallback" id="fallback-anything" value="anything"><label for="fallback-anything">I'm happy with whatever is available</label></div>
+</div>
+</section>
+
+<section class="panel">
+<h2 class="question">How many options would you like to see?</h2>
+<p class="hint">We'll keep the list useful without making you wade through endless versions.</p>
+<div class="choices">
+<div class="choice"><input type="radio" name="releaseAmount" id="amount-few" value="few"><label for="amount-few">Just the best few</label></div>
+<div class="choice"><input type="radio" name="releaseAmount" id="amount-handful" value="handful"><label for="amount-handful">A handful of good choices</label></div>
+<div class="choice"><input type="radio" name="releaseAmount" id="amount-plenty" value="plenty"><label for="amount-plenty">Give me plenty to choose from</label></div>
+<div class="choice"><input type="radio" name="releaseAmount" id="amount-useful" value="useful"><label for="amount-useful">Show me everything useful</label></div>
+</div>
+</section>
+
+<div class="actions"><a class="button secondary" href="advanced-picture.html">← Previous section</a><button class="button primary" type="button" id="continue">Continue</button></div>
+</main>
+<footer>SimplyStremio is a configuration tool. It does not provide or host media.</footer>
+<script>
+const key="simplyStremioAdvancedReleases";
+const saved=JSON.parse(sessionStorage.getItem(key)||"null");
+if(saved){for(const [name,value] of Object.entries(saved)){const input=document.querySelector(`input[name="${name}"][value="${value}"]`);if(input)input.checked=true;}}
+document.getElementById("continue").addEventListener("click",()=>{
+ const data={};
+ for(const name of ["releasePreference","releaseTieBreaker","releaseFallback","releaseAmount"]){
+  const selected=document.querySelector(`input[name="${name}"]:checked`);
+  if(selected)data[name]=selected.value;
+ }
+ sessionStorage.setItem(key,JSON.stringify(data));
+ window.location.href="advanced-results.html";
+});
+</script>
+</body>
+</html>
