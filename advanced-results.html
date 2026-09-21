@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SimplyStremio · Advanced Setup</title>
+<style>
+    :root{--bg:#111315;--panel:#191c20;--panel-hover:#20242a;--text:#f3f4f6;--muted:#a8adb5;--border:#30343b;--accent:#c89445}
+    *{box-sizing:border-box}html,body{min-height:100%}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    header,main,footer{width:min(760px,calc(100% - 32px));margin:0 auto}header{padding:24px 0 12px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:14px}.brand{font-size:14px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}.step{color:var(--muted);font-size:.85rem}
+    .progress{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;height:4px}.progress-step{border-radius:999px;background:var(--border)}.progress-step.active{background:var(--accent)}
+    main{padding:28px 0 24px}.page-heading{display:flex;justify-content:space-between;align-items:baseline;gap:16px}.eyebrow{margin:0 0 8px;color:var(--accent);font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}.page-count{flex-shrink:0;color:#777d86;font-size:.78rem;white-space:nowrap}h1{margin:0;font-size:clamp(2rem,5vw,2.7rem);line-height:1.08;letter-spacing:-.03em}.intro{max-width:680px;margin:14px 0 24px;color:var(--muted);font-size:1rem;line-height:1.6}
+    .panel{padding:18px;margin-bottom:12px;border:1px solid var(--border);border-radius:14px;background:var(--panel)}
+    .question{margin:0 0 14px;line-height:1.5}.hint{margin:0 0 16px;color:var(--muted);font-size:.82rem;line-height:1.5}
+    .choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.choice{position:relative}.choice input{position:absolute;opacity:0;pointer-events:none}.choice label{display:flex;align-items:center;min-height:54px;padding:13px 15px;border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:.15s}.choice label:hover{border-color:#555b64;background:var(--panel-hover)}.choice input:checked+label{border-color:var(--accent);background:rgba(200,148,69,.1)}.choice input:focus-visible+label{outline:2px solid var(--accent);outline-offset:2px}
+    .actions{display:flex;justify-content:space-between;gap:12px;margin-top:18px}.button{display:inline-block;padding:14px 20px;border:1px solid var(--accent);border-radius:10px;background:var(--accent);color:#17120b;font-weight:700;text-decoration:none;cursor:pointer}.button.secondary{border-color:var(--border);background:transparent;color:var(--muted)}.button.secondary:hover{border-color:var(--accent);color:var(--text)}
+    footer{padding:0 0 28px;color:#777d86;font-size:.78rem;line-height:1.5}
+    @media(max-width:560px){header{padding-top:18px}main{padding-top:22px}.choices{grid-template-columns:1fr}.page-heading{align-items:flex-start}.actions{flex-direction:column-reverse}.actions .button{width:100%;text-align:center}}
+  </style>
+</head>
+<body>
+<header><div class="topbar"><div class="brand">SimplyStremio</div><div class="step">Step 3 of 4</div></div><div class="progress" aria-label="Setup progress">
+  <span class="progress-step"></span><span class="progress-step"></span><span class="progress-step active"></span><span class="progress-step"></span>
+</div></header>
+<main>
+<div class="page-heading"><p class="eyebrow">Let's make it useful</p><span class="page-count">6 of 7</span></div>
+<h1>How should we balance your results?</h1>
+<p class="intro">A good list isn't just about finding releases. We'll use your answers to decide what deserves a place near the top, while keeping the results useful.</p>
+
+<section class="panel">
+<h2 class="question">When something is ready to play right away, how much should that matter?</h2>
+<p class="hint">Some releases may need to be prepared before they can be watched. We can favour the ones that are ready to go.</p>
+<div class="choices">
+<div class="choice"><input type="radio" name="availability" id="availability-high" value="high"><label for="availability-high">A lot — ready to watch matters</label></div>
+<div class="choice"><input type="radio" name="availability" id="availability-medium" value="medium"><label for="availability-medium">A little — but don't sacrifice quality</label></div>
+<div class="choice"><input type="radio" name="availability" id="availability-low" value="low"><label for="availability-low">Only when the releases are otherwise similar</label></div>
+<div class="choice"><input type="radio" name="availability" id="availability-none" value="none"><label for="availability-none">It doesn't matter to me</label></div>
+</div>
+</section>
+
+<section class="panel">
+<h2 class="question">When we have lots of good choices, what should we favour?</h2>
+<p class="hint">We'll use this to fine-tune the order without making you choose a technical sorting method.</p>
+<div class="choices">
+<div class="choice"><input type="radio" name="resultPriority" id="priority-quality" value="quality"><label for="priority-quality">The best overall quality</label></div>
+<div class="choice"><input type="radio" name="resultPriority" id="priority-match" value="match"><label for="priority-match">The closest match to my preferences</label></div>
+<div class="choice"><input type="radio" name="resultPriority" id="priority-balance" value="balance"><label for="priority-balance">A good balance of everything</label></div>
+<div class="choice"><input type="radio" name="resultPriority" id="priority-variety" value="variety"><label for="priority-variety">A useful mix of different options</label></div>
+</div>
+</section>
+
+<section class="panel">
+<h2 class="question">How much variety would you like in your results?</h2>
+<p class="hint">We can keep the list focused, or give you a wider mix when there are plenty of good choices.</p>
+<div class="choices">
+<div class="choice"><input type="radio" name="resultVariety" id="variety-focused" value="focused"><label for="variety-focused">Keep it focused — show me the standouts</label></div>
+<div class="choice"><input type="radio" name="resultVariety" id="variety-balanced" value="balanced"><label for="variety-balanced">A good mix is fine</label></div>
+<div class="choice"><input type="radio" name="resultVariety" id="variety-wide" value="wide"><label for="variety-wide">Give me plenty of different options</label></div>
+<div class="choice"><input type="radio" name="resultVariety" id="variety-all" value="all"><label for="variety-all">Keep as many useful choices as possible</label></div>
+</div>
+</section>
+
+<section class="panel">
+<h2 class="question">If you're not sure what to choose, how much should SimplyStremio decide for you?</h2>
+<p class="hint">You can leave the fine details to us, or have your preferences take the lead.</p>
+<div class="choices">
+<div class="choice"><input type="radio" name="resultControl" id="control-smart" value="smart"><label for="control-smart">You choose what makes the most sense</label></div>
+<div class="choice"><input type="radio" name="resultControl" id="control-preferences" value="preferences"><label for="control-preferences">Follow my preferences closely</label></div>
+<div class="choice"><input type="radio" name="resultControl" id="control-balanced" value="balanced"><label for="control-balanced">Use my preferences, but keep things sensible</label></div>
+</div>
+</section>
+
+<div class="actions"><a class="button secondary" href="advanced-releases.html">← Previous section</a><button class="button primary" type="button" id="continue">Continue</button></div>
+</main>
+<footer>SimplyStremio is a configuration tool. It does not provide or host media.</footer>
+<script>
+const key="simplyStremioAdvancedResults";
+const saved=JSON.parse(sessionStorage.getItem(key)||"null");
+if(saved){for(const [name,value] of Object.entries(saved)){const input=document.querySelector(`input[name="${name}"][value="${value}"]`);if(input)input.checked=true;}}
+document.getElementById("continue").addEventListener("click",()=>{
+ const data={};
+ for(const name of ["availability","resultPriority","resultVariety","resultControl"]){
+  const selected=document.querySelector(`input[name="${name}"]:checked`);
+  if(selected)data[name]=selected.value;
+ }
+ sessionStorage.setItem(key,JSON.stringify(data));
+ window.location.href="advanced-review.html";
+});
+</script>
+</body>
+</html>
