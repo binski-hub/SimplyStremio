@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SimplyStremio · Advanced Setup</title>
+<style>
+    :root{--bg:#111315;--panel:#191c20;--panel-hover:#20242a;--text:#f3f4f6;--muted:#a8adb5;--border:#30343b;--accent:#c89445}
+    *{box-sizing:border-box}html,body{min-height:100%}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    header,main,footer{width:min(760px,calc(100% - 32px));margin:0 auto}header{padding:24px 0 12px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:14px}.brand{font-size:14px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}.step{color:var(--muted);font-size:.85rem}
+    .progress{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;height:4px}.progress-step{border-radius:999px;background:var(--border)}.progress-step.active{background:var(--accent)}
+    main{padding:28px 0 24px}.page-heading{display:flex;justify-content:space-between;align-items:baseline;gap:16px}.eyebrow{margin:0 0 8px;color:var(--accent);font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}.page-count{flex-shrink:0;color:#777d86;font-size:.78rem;white-space:nowrap}h1{margin:0;font-size:clamp(2rem,5vw,2.7rem);line-height:1.08;letter-spacing:-.03em}.intro{max-width:680px;margin:14px 0 24px;color:var(--muted);font-size:1rem;line-height:1.6}
+    .panel{padding:18px;margin-bottom:12px;border:1px solid var(--border);border-radius:14px;background:var(--panel)}.summary{margin:0;color:var(--muted);line-height:1.6}.summary strong{color:var(--text)}
+    .actions{display:flex;justify-content:space-between;gap:12px;margin-top:18px}.button{display:inline-block;padding:14px 20px;border:1px solid var(--accent);border-radius:10px;background:var(--accent);color:#17120b;font-weight:700;text-decoration:none;cursor:pointer}.button.secondary{border-color:var(--border);background:transparent;color:var(--muted)}.button.secondary:hover{border-color:var(--accent);color:var(--text)}
+    footer{padding:0 0 28px;color:#777d86;font-size:.78rem;line-height:1.5}
+    @media(max-width:560px){header{padding-top:18px}main{padding-top:22px}.page-heading{align-items:flex-start}.actions{flex-direction:column-reverse}.actions .button{width:100%;text-align:center}}
+  </style>
+</head>
+<body>
+<header><div class="topbar"><div class="brand">SimplyStremio</div><div class="step">Step 3 of 4</div></div><div class="progress" aria-label="Setup progress">
+  <span class="progress-step"></span><span class="progress-step"></span><span class="progress-step active"></span><span class="progress-step"></span>
+</div></header>
+<main>
+<div class="page-heading"><p class="eyebrow">Let's see what you've got</p><span class="page-count">7 of 7</span></div>
+<h1>Ready to see what we've come up with?</h1>
+<p class="intro">Here's a quick look at the choices you've made. SimplyStremio will use them to shape the way your releases are found and ordered.</p>
+
+<section class="panel">
+<h2 class="question">Your setup</h2>
+<p class="summary" id="summary">We'll put your preferences together here.</p>
+</section>
+
+<section class="panel">
+<h2 class="question">One last thing</h2>
+<p class="summary">You can always change these preferences later. Nothing here changes your media or your streaming account — it simply tells SimplyStremio what sort of results you prefer.</p>
+</section>
+
+<div class="actions"><a class="button secondary" href="advanced-results.html">← Previous section</a><button class="button primary" type="button" id="continue">Looks good — continue</button></div>
+</main>
+<footer>SimplyStremio is a configuration tool. It does not provide or host media.</footer>
+<script>
+function get(key){try{return JSON.parse(sessionStorage.getItem(key)||"null")}catch{return null}}
+const discovery=get("simplyStremioAdvancedDiscovery");
+const languages=get("simplyStremioAdvancedLanguages");
+const quality=get("simplyStremioAdvancedVideoQuality");
+const picture=get("simplyStremioAdvancedPicture");
+const releases=get("simplyStremioAdvancedReleases");
+const results=get("simplyStremioAdvancedResults");
+
+const parts=[];
+if(discovery) parts.push("<strong>Discovery:</strong> your browsing preferences are saved.");
+if(languages) parts.push("<strong>Languages:</strong> your language and subtitle preferences are saved.");
+if(quality) parts.push("<strong>Video quality:</strong> your resolution, quality, size and fallback preferences are saved.");
+if(picture) parts.push("<strong>Picture features:</strong> your HDR, Dolby Vision and compatibility preferences are saved.");
+if(releases) parts.push("<strong>Releases:</strong> your release, tie-breaker, fallback and choice preferences are saved.");
+if(results) parts.push("<strong>Results:</strong> your ordering, variety and control preferences are saved.");
+document.getElementById("summary").innerHTML=parts.length?parts.join("<br>"):"Your preferences will appear here as you make your choices.";
+
+document.getElementById("continue").addEventListener("click",()=>{
+ window.location.href="setup-complete.html?mode=advanced";
+});
+</script>
+</body>
+</html>
