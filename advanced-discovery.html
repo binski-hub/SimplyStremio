@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SimplyStremio — Advanced Discovery</title>
+  <style>
+    :root{--bg:#111315;--panel:#191c20;--panel-hover:#20242a;--text:#f3f4f6;--muted:#a8adb5;--border:#30343b;--accent:#c89445}
+    *{box-sizing:border-box} html,body{min-height:100%} body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    header,main,footer{width:min(760px,calc(100% - 32px));margin:0 auto}
+    header{padding:24px 0 12px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:14px}
+    .brand{font-size:1rem;font-weight:700;letter-spacing:.02em}.step{color:var(--muted);font-size:.85rem}
+    .progress{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;height:4px}.progress-step{border-radius:999px;background:var(--border)}.progress-step.active{background:var(--accent)}
+    main{padding:28px 0 24px}.eyebrow{margin:0 0 8px;color:var(--accent);font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+    h1{margin:0;font-size:clamp(2rem,5vw,2.7rem);line-height:1.08;letter-spacing:-.03em}.intro{max-width:680px;margin:14px 0 24px;color:var(--muted);font-size:1rem;line-height:1.6}
+    .panel{padding:18px;margin-bottom:12px;border:1px solid var(--border);border-radius:14px;background:var(--panel)}
+    .question{margin:0 0 14px;line-height:1.5}.choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+    .choice{position:relative}.choice input{position:absolute;opacity:0;pointer-events:none}.choice label{display:flex;align-items:center;min-height:54px;padding:13px 15px;border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:.15s}
+    .choice label:hover{border-color:#555b64;background:var(--panel-hover)}.choice input:checked+label{border-color:var(--accent);background:rgba(200,148,69,.1)}.choice input:focus-visible+label{outline:2px solid var(--accent);outline-offset:2px}
+    .checks{grid-template-columns:repeat(2,minmax(0,1fr))}.actions{display:flex;justify-content:space-between;gap:12px;margin-top:18px}
+    .button{display:inline-block;padding:14px 20px;border:1px solid var(--accent);border-radius:10px;background:var(--accent);color:#17120b;font-weight:700;text-decoration:none;cursor:pointer}.button.secondary{border-color:var(--border);background:transparent;color:var(--muted)}
+    .button.secondary:hover{border-color:var(--accent);color:var(--text)}.button:disabled{opacity:.5;cursor:not-allowed}footer{padding:0 0 28px;color:#777d86;font-size:.78rem;line-height:1.5}
+    @media(max-width:560px){header{padding-top:18px}main{padding-top:22px}.choices,.checks{grid-template-columns:1fr}.actions{flex-direction:column-reverse}.actions .button{width:100%;text-align:center}}
+  </style>
+</head>
+<body>
+<header><div class="topbar"><div class="brand">SimplyStremio</div><div class="step">Advanced · 1 of 7</div></div><div class="progress" aria-label="Advanced setup progress">
+  <span class="progress-step active"></span><span class="progress-step"></span><span class="progress-step"></span><span class="progress-step"></span><span class="progress-step"></span><span class="progress-step"></span><span class="progress-step"></span>
+</div></header>
+<main>
+  <p class="eyebrow">Discovery</p>
+  <h1>What should SimplyStremio help you discover?</h1>
+  <p class="intro">This is about what you want to see when you browse. We'll turn your answers into sensible catalogue choices without making you manage them yourself.</p>
+
+  <form id="form">
+    <section class="panel"><p class="question">What do you mainly want to browse?</p><div class="choices">
+      <div class="choice"><input type="radio" id="movies" name="type" value="movies"><label for="movies">Movies</label></div>
+      <div class="choice"><input type="radio" id="series" name="type" value="series"><label for="series">Series</label></div>
+      <div class="choice"><input type="radio" id="both" name="type" value="both"><label for="both">Both</label></div>
+    </div></section>
+
+    <section class="panel"><p class="question">When you're browsing, what sounds most like you?</p><div class="choices">
+      <div class="choice"><input type="radio" id="popular" name="discovery" value="popular"><label for="popular">Show me what's popular</label></div>
+      <div class="choice"><input type="radio" id="new" name="discovery" value="new"><label for="new">Show me what's new</label></div>
+      <div class="choice"><input type="radio" id="personal" name="discovery" value="personal"><label for="personal">Keep it close to what I like</label></div>
+      <div class="choice"><input type="radio" id="mix" name="discovery" value="mix"><label for="mix">Give me a mix</label></div>
+    </div></section>
+
+    <section class="panel"><p class="question">How adventurous should your recommendations be?</p><div class="choices">
+      <div class="choice"><input type="radio" id="familiar" name="adventure" value="familiar"><label for="familiar">Mostly familiar</label></div>
+      <div class="choice"><input type="radio" id="balanced" name="adventure" value="balanced"><label for="balanced">A bit of both</label></div>
+      <div class="choice"><input type="radio" id="adventurous" name="adventure" value="adventurous"><label for="adventurous">Surprise me</label></div>
+    </div></section>
+
+    <section class="panel"><p class="question">Anything you'd particularly like included?</p><div class="choices checks">
+      <div class="choice"><input type="checkbox" id="international" name="extra" value="international"><label for="international">International films & shows</label></div>
+      <div class="choice"><input type="checkbox" id="anime" name="extra" value="anime"><label for="anime">Anime</label></div>
+    </div></section>
+
+    <div class="actions"><a class="button secondary" href="setup-configure.html">← Go back a step</a><button class="button" id="continue" type="submit" disabled>Continue →</button></div>
+  </form>
+</main>
+<footer>SimplyStremio is a configuration tool. It does not provide or host media.</footer>
+<script>
+  const form=document.querySelector("#form"), button=document.querySelector("#continue");
+  function ready(){button.disabled=!document.querySelector('input[name="type"]:checked')||!document.querySelector('input[name="discovery"]:checked')||!document.querySelector('input[name="adventure"]:checked')}
+  form.addEventListener("change",ready);
+  form.addEventListener("submit",e=>{e.preventDefault();if(button.disabled)return;
+    const data={type:document.querySelector('input[name="type"]:checked').value,discovery:document.querySelector('input[name="discovery"]:checked').value,adventure:document.querySelector('input[name="adventure"]:checked').value,international:document.querySelector("#international").checked,anime:document.querySelector("#anime").checked};
+    sessionStorage.setItem("simplyStremioAdvancedDiscovery",JSON.stringify(data));window.location.href="advanced-languages.html";
+  });
+</script>
+</body>
+</html>
