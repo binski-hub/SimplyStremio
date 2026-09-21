@@ -5,54 +5,57 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SimplyStremio · Advanced Setup</title>
 <style>
-:root{--bg:#11100e;--panel:#1b1916;--panel2:#211e1a;--text:#f1ede5;--muted:#aaa298;--border:#39342d;--accent:#d09a48;--accent-soft:rgba(208,154,72,.12)}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-main{max-width:760px;margin:0 auto;padding:42px 22px 56px}.eyebrow{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:12px}
-h1{font-size:clamp(30px,6vw,46px);line-height:1.08;margin:0 0 14px} .intro{color:var(--muted);font-size:16px;line-height:1.6;margin:0 0 28px}
-.progress{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:38px}.progress span{height:4px;border-radius:99px;background:#302c27}.progress .active{background:var(--accent)}
-.panel{border:1px solid var(--border);background:var(--panel);border-radius:16px;padding:22px;margin-bottom:16px}
-.question{font-size:18px;font-weight:700;margin:0 0 6px}.hint{color:var(--muted);font-size:14px;line-height:1.5;margin:0 0 16px}
-.options{display:grid;gap:9px}.option{position:relative}.option input{position:absolute;opacity:0}.option label{display:block;padding:14px 16px;border:1px solid var(--border);border-radius:12px;background:var(--panel2);cursor:pointer;transition:.15s}.option input:checked+label{border-color:var(--accent);background:var(--accent-soft)}.option label:hover{border-color:#5a5043}
-.actions{display:flex;justify-content:space-between;gap:12px;margin-top:28px}.button{display:inline-block;text-decoration:none;border:1px solid var(--border);border-radius:12px;padding:13px 18px;color:var(--text);background:var(--panel)}button{font:inherit}.button.primary{border-color:var(--accent);background:var(--accent);color:#17130d;font-weight:700;cursor:pointer}
-@media(max-width:520px){main{padding:30px 16px 44px}.panel{padding:18px}.actions .button{padding:12px 14px}}
-</style>
+    :root{--bg:#111315;--panel:#191c20;--panel-hover:#20242a;--text:#f3f4f6;--muted:#a8adb5;--border:#30343b;--accent:#c89445}
+    *{box-sizing:border-box}html,body{min-height:100%}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    header,main,footer{width:min(760px,calc(100% - 32px));margin:0 auto}header{padding:24px 0 12px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:14px}.brand{font-size:14px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}.step{color:var(--muted);font-size:.85rem}
+    .progress{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;height:4px}.progress-step{border-radius:999px;background:var(--border)}.progress-step.active{background:var(--accent)}
+    main{padding:28px 0 24px}.page-heading{display:flex;justify-content:space-between;align-items:baseline;gap:16px}.eyebrow{margin:0 0 8px;color:var(--accent);font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}.page-count{flex-shrink:0;color:#777d86;font-size:.78rem;white-space:nowrap}h1{margin:0;font-size:clamp(2rem,5vw,2.7rem);line-height:1.08;letter-spacing:-.03em}.intro{max-width:680px;margin:14px 0 24px;color:var(--muted);font-size:1rem;line-height:1.6}
+    .panel{padding:18px;margin-bottom:12px;border:1px solid var(--border);border-radius:14px;background:var(--panel)}
+    .question{margin:0 0 14px;line-height:1.5}.hint{margin:0 0 16px;color:var(--muted);font-size:.82rem;line-height:1.5}
+    .choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.choice{position:relative}.choice input{position:absolute;opacity:0;pointer-events:none}.choice label{display:flex;align-items:center;min-height:54px;padding:13px 15px;border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:.15s}.choice label:hover{border-color:#555b64;background:var(--panel-hover)}.choice input:checked+label{border-color:var(--accent);background:rgba(200,148,69,.1)}.choice input:focus-visible+label{outline:2px solid var(--accent);outline-offset:2px}
+    .actions{display:flex;justify-content:space-between;gap:12px;margin-top:18px}.button{display:inline-block;padding:14px 20px;border:1px solid var(--accent);border-radius:10px;background:var(--accent);color:#17120b;font-weight:700;text-decoration:none;cursor:pointer}.button.secondary{border-color:var(--border);background:transparent;color:var(--muted)}.button.secondary:hover{border-color:var(--accent);color:var(--text)}
+    footer{padding:0 0 28px;color:#777d86;font-size:.78rem;line-height:1.5}
+    @media(max-width:560px){header{padding-top:18px}main{padding-top:22px}.choices{grid-template-columns:1fr}.page-heading{align-items:flex-start}.actions{flex-direction:column-reverse}.actions .button{width:100%;text-align:center}}
+  </style>
 </head>
 <body>
 <main>
-<div class="progress" aria-label="Advanced setup progress"><span class="active"></span><span class="active"></span><span class="active"></span><span class="active"></span><span></span><span></span><span></span></div>
-<div class="eyebrow">A little extra polish</div>
+<header><div class="topbar"><div class="brand">SimplyStremio</div><div class="step">Step 3 of 4</div></div><div class="progress" aria-label="Setup progress">
+  <span class="progress-step"></span><span class="progress-step"></span><span class="progress-step active"></span><span class="progress-step"></span>
+</div></header>
+<div class="page-heading"><p class="eyebrow">A little extra polish</p><span class="page-count">4 of 7</span></div>
 <h1>How much should picture features matter?</h1>
 <p class="intro">We'll use this to understand how you feel about things like HDR and Dolby Vision, without asking you to know what any of the technical labels mean.</p>
 
 <section class="panel">
 <h2 class="question">What kind of picture do you like?</h2>
 <p class="hint">When these picture features are available, what would you prefer?</p>
-<div class="options">
-<div class="option"><input type="radio" name="pictureStyle" id="picture-fancy" value="enhanced"><label for="picture-fancy">Give me the fancy stuff when it's available</label></div>
-<div class="option"><input type="radio" name="pictureStyle" id="picture-balanced" value="balanced"><label for="picture-balanced">Nice to have, but picture quality comes first</label></div>
-<div class="option"><input type="radio" name="pictureStyle" id="picture-comparable" value="comparable"><label for="picture-comparable">Only when everything else is about equal</label></div>
-<div class="option"><input type="radio" name="pictureStyle" id="picture-simple" value="neutral"><label for="picture-simple">Keep it simple — don't give them special treatment</label></div>
+<div class="choices">
+<div class="choice"><input type="radio" name="pictureStyle" id="picture-fancy" value="enhanced"><label for="picture-fancy">Give me the fancy stuff when it's available</label></div>
+<div class="choice"><input type="radio" name="pictureStyle" id="picture-balanced" value="balanced"><label for="picture-balanced">Nice to have, but picture quality comes first</label></div>
+<div class="choice"><input type="radio" name="pictureStyle" id="picture-comparable" value="comparable"><label for="picture-comparable">Only when everything else is about equal</label></div>
+<div class="choice"><input type="radio" name="pictureStyle" id="picture-simple" value="neutral"><label for="picture-simple">Keep it simple — don't give them special treatment</label></div>
 </div>
 </section>
 
 <section class="panel">
 <h2 class="question">How should we treat picture features when choosing between releases?</h2>
 <p class="hint">This tells us how strongly your preference should influence the order.</p>
-<div class="options">
-<div class="option"><input type="radio" name="pictureWeight" id="weight-high" value="high"><label for="weight-high">Put them near the top</label></div>
-<div class="option"><input type="radio" name="pictureWeight" id="weight-medium" value="medium"><label for="weight-medium">Let them help, but don't let them take over</label></div>
-<div class="option"><input type="radio" name="pictureWeight" id="weight-low" value="low"><label for="weight-low">Only let them matter when the rest is comparable</label></div>
-<div class="option"><input type="radio" name="pictureWeight" id="weight-none" value="none"><label for="weight-none">Don't give them any special treatment</label></div>
+<div class="choices">
+<div class="choice"><input type="radio" name="pictureWeight" id="weight-high" value="high"><label for="weight-high">Put them near the top</label></div>
+<div class="choice"><input type="radio" name="pictureWeight" id="weight-medium" value="medium"><label for="weight-medium">Let them help, but don't let them take over</label></div>
+<div class="choice"><input type="radio" name="pictureWeight" id="weight-low" value="low"><label for="weight-low">Only let them matter when the rest is comparable</label></div>
+<div class="choice"><input type="radio" name="pictureWeight" id="weight-none" value="none"><label for="weight-none">Don't give them any special treatment</label></div>
 </div>
 </section>
 
 <section class="panel">
 <h2 class="question">Is there anything you'd rather avoid?</h2>
 <p class="hint">If you're unsure, leave this to SimplyStremio.</p>
-<div class="options">
-<div class="option"><input type="radio" name="pictureCompatibility" id="compat-all" value="all"><label for="compat-all">Keep everything — I'll let my setup handle compatibility</label></div>
-<div class="option"><input type="radio" name="pictureCompatibility" id="compat-safe" value="safe"><label for="compat-safe">Prefer picture formats that are broadly compatible</label></div>
-<div class="option"><input type="radio" name="pictureCompatibility" id="compat-smart" value="smart"><label for="compat-smart">Use your best judgement for me</label></div>
+<div class="choices">
+<div class="choice"><input type="radio" name="pictureCompatibility" id="compat-all" value="all"><label for="compat-all">Keep everything — I'll let my setup handle compatibility</label></div>
+<div class="choice"><input type="radio" name="pictureCompatibility" id="compat-safe" value="safe"><label for="compat-safe">Prefer picture formats that are broadly compatible</label></div>
+<div class="choice"><input type="radio" name="pictureCompatibility" id="compat-smart" value="smart"><label for="compat-smart">Use your best judgement for me</label></div>
 </div>
 </section>
 
