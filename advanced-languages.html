@@ -9,13 +9,13 @@
     *{box-sizing:border-box}body{margin:0;min-height:100vh;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
     header,main,footer{width:min(760px,calc(100% - 32px));margin:0 auto}header{padding:24px 0 12px}.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.brand{font-size:1rem;font-weight:700}.step{color:var(--muted);font-size:.85rem}
     .progress{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;height:4px}.progress-step{border-radius:999px;background:var(--border)}.progress-step.active{background:var(--accent)}
-    .panel-intro{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin:0 0 16px;line-height:1.5}.panel-question{min-width:0}.panel-count{flex-shrink:0;color:#777d86;font-size:.78rem;white-space:nowrap}
+    .page-heading{display:flex;justify-content:space-between;align-items:baseline;gap:16px}.eyebrow{margin:0 0 8px;color:var(--accent);font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}.page-count{flex-shrink:0;color:#777d86;font-size:.78rem;white-space:nowrap}
     main{padding:28px 0 24px}.eyebrow{margin:0 0 8px;color:var(--accent);font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}h1{margin:0;font-size:clamp(2rem,5vw,2.7rem);line-height:1.08;letter-spacing:-.03em}.intro{margin:14px 0 24px;color:var(--muted);line-height:1.6}
     .panel{padding:18px;margin-bottom:12px;border:1px solid var(--border);border-radius:14px;background:var(--panel)}.question{margin:0 0 14px;line-height:1.5}.choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
     .choice{position:relative}.choice input{position:absolute;opacity:0;pointer-events:none}.choice label{display:flex;align-items:center;min-height:54px;padding:13px 15px;border:1px solid var(--border);border-radius:10px;cursor:pointer}.choice label:hover{border-color:#555b64;background:var(--panel-hover)}
     .choice input:checked+label{border-color:var(--accent);background:rgba(200,148,69,.1)}.choice input:focus-visible+label{outline:2px solid var(--accent);outline-offset:2px}
     .note{margin:12px 0 0;color:#777d86;font-size:.82rem;line-height:1.5}.actions{display:flex;justify-content:space-between;gap:12px;margin-top:18px}.button{padding:14px 20px;border:1px solid var(--accent);border-radius:10px;background:var(--accent);color:#17120b;font-weight:700;text-decoration:none;cursor:pointer}.button.secondary{border-color:var(--border);background:transparent;color:var(--muted)}.button.secondary:hover{border-color:var(--accent);color:var(--text)}.button:disabled{opacity:.5;cursor:not-allowed}footer{padding-bottom:28px;color:#777d86;font-size:.78rem}
-    @media(max-width:560px){header{padding-top:18px}main{padding-top:22px}.choices{grid-template-columns:1fr}.actions{flex-direction:column-reverse}.actions .button{width:100%;text-align:center}}
+    @media(max-width:560px){header{padding-top:18px}main{padding-top:22px}.choices{grid-template-columns:1fr}.page-heading{align-items:flex-start}.actions{flex-direction:column-reverse}.actions .button{width:100%;text-align:center}}
   </style>
 </head>
 <body>
@@ -23,13 +23,13 @@
   <span class="progress-step"></span><span class="progress-step"></span><span class="progress-step active"></span><span class="progress-step"></span>
 </div></header>
 <main>
-  <p class="eyebrow">Speak my language</p>
+  <div class="page-heading"><p class="eyebrow">Speak my language</p><span class="page-count">2 of 7</span></div>
   <h1>What languages should we look for?</h1>
   <p class="intro">Tell us what you normally want to watch. You can choose more than one language, and we'll keep the technical language settings out of sight.</p>
 
   <form id="form">
     <section class="panel">
-      <div class="panel-intro"><span class="panel-question">Which languages should come first?</span><span class="panel-count">Question 2/7</span></div>
+      <p class="question">Which languages should come first?</p>
       <div class="choices">
         <div class="choice"><input type="checkbox" id="english" name="language" value="English"><label for="english">English</label></div>
         <div class="choice"><input type="checkbox" id="original" name="language" value="Original"><label for="original">Original language</label></div>
