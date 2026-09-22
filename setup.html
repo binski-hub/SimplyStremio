@@ -14,24 +14,24 @@
     * { box-sizing: border-box; }
     body { margin: 0; min-height: 100vh; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--bg); color: var(--text); }
     main { width: min(760px, calc(100% - 32px)); margin: 0 auto; padding: 12px 0 12px; }
-    .topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 56px; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 40px; }
     .brand { font-size: 14px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); }
     .step { font-size: 13px; color: var(--muted); }
-    .progress { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; height: 3px; margin-bottom: 48px; }
+    .progress { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; height: 3px; margin-bottom: 40px; }
     .progress-step { display: block; height: 100%; border-radius: 99px; background: var(--border); }
     .progress-step.active { background: var(--accent); }
     h1 { margin: 0 0 12px; font-size: clamp(36px, 7vw, 56px); line-height: 1; }
     .intro { margin: 0; max-width: 620px; color: var(--muted); font-size: 20px; line-height: 1.5; }
-    .choices { display: grid; gap: 12px; margin-top: 36px; }
-    .choice { display: block; width: 100%; padding: 20px 22px; border: 1px solid var(--border); border-radius: 14px; background: var(--panel); color: var(--text); text-align: left; font: inherit; cursor: pointer; transition: border-color .15s ease, transform .15s ease; }
+    .choices { display: grid; gap: 10px; margin-top: 28px; }
+    .choice { display: block; width: 100%; padding: 16px 22px; border: 1px solid var(--border); border-radius: 14px; background: var(--panel); color: var(--text); text-align: left; font: inherit; cursor: pointer; transition: border-color .15s ease, transform .15s ease; }
     .choice:hover { border-color: var(--border-hover); transform: translateY(-1px); }
     .choice strong { display: block; font-size: 18px; }
     .choice span { display: block; margin-top: 5px; color: var(--muted); font-size: 14px; line-height: 1.4; }
     .choice.selected { border-color: var(--accent); }
-    .provider-note { margin-top: 24px; color: var(--muted); font-size: 13px; line-height: 1.5; }
-    .continue { display: block; width: 100%; margin-top: 24px; padding: 14px 20px; border: 1px solid var(--border); border-radius: 10px; background: var(--panel); color: var(--muted); font: inherit; font-weight: 700; cursor: not-allowed; }
+    .provider-note { margin-top: 18px; color: var(--muted); font-size: 13px; line-height: 1.5; }
+    .continue { display: block; width: 100%; margin-top: 18px; padding: 14px 20px; border: 1px solid var(--border); border-radius: 10px; background: var(--panel); color: var(--muted); font: inherit; font-weight: 700; cursor: not-allowed; }
     .continue.ready { border-color: var(--accent); background: var(--accent); color: #17120b; cursor: pointer; }
-    footer { margin-top: 48px; color: var(--muted); font-size: 13px; }
+    footer { margin-top: 28px; color: var(--muted); font-size: 13px; }
     @media (max-width: 600px) { main { padding: 12px 0 12px; } .topbar { margin-bottom: 40px; } .progress { margin-bottom: 40px; } .choice { padding: 18px; } }
   </style>
 </head>
