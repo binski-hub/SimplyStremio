@@ -198,19 +198,9 @@
       continueButton.disabled = !internationalChoices.some((choice) => choice.checked) && !animeChoice.checked;
     }
 
-    internationalChoices.forEach((choice) => {
-      choice.addEventListener("change", updateContinueState);
-    });
-
-    animeChoice.addEventListener("change", updateContinueState);
-
-    form.addEventListener("submit", (event) => {
-      event.preventDefault();
-
+    function saveInternationalPreferences() {
       const selectedInternational = internationalChoices.find((choice) => choice.checked);
       const animeSelected = animeChoice.checked;
-
-      if (!selectedInternational && !animeSelected) return;
 
       if (selectedInternational) {
         sessionStorage.setItem("simplyStremioInternational", selectedInternational.value);
@@ -219,6 +209,34 @@
       }
 
       sessionStorage.setItem("simplyStremioAnime", animeSelected ? "true" : "false");
+      updateContinueState();
+    }
+
+    try {
+      const savedInternational = sessionStorage.getItem("simplyStremioInternational");
+      const savedAnime = sessionStorage.getItem("simplyStremioAnime") === "true";
+
+      internationalChoices.forEach((choice) => {
+        choice.checked = choice.value === savedInternational;
+      });
+      animeChoice.checked = savedAnime;
+    } catch {
+      // Ignore invalid stored preferences and start with a clean selection.
+    }
+
+    internationalChoices.forEach((choice) => {
+      choice.addEventListener("change", saveInternationalPreferences);
+    });
+
+    animeChoice.addEventListener("change", saveInternationalPreferences);
+
+    updateContinueState();
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      if (!internationalChoices.some((choice) => choice.checked) && !animeChoice.checked) return;
+
       window.location.href = "setup-preferences-priority.html";
     });
   </script>
