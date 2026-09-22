@@ -174,6 +174,31 @@
     const form = document.querySelector("#preferencesForm");
     const checkboxes = [...document.querySelectorAll('input[name="discovery"]')];
 
+    function saveDiscovery() {
+      const discovery = checkboxes
+        .filter((checkbox) => checkbox.checked)
+        .map((checkbox) => checkbox.value);
+
+      if (discovery.length) {
+        sessionStorage.setItem("simplyStremioDiscovery", JSON.stringify(discovery));
+      } else {
+        sessionStorage.removeItem("simplyStremioDiscovery");
+      }
+    }
+
+    try {
+      const savedDiscovery = JSON.parse(sessionStorage.getItem("simplyStremioDiscovery") || "[]");
+      checkboxes.forEach((checkbox) => {
+        checkbox.checked = savedDiscovery.includes(checkbox.value);
+      });
+    } catch {
+      // Ignore invalid stored preferences and start with a clean selection.
+    }
+
+    checkboxes.forEach((checkbox) => {
+      checkbox.addEventListener("change", saveDiscovery);
+    });
+
     form.addEventListener("submit", (event) => {
       event.preventDefault();
 
@@ -181,7 +206,8 @@
         .filter((checkbox) => checkbox.checked)
         .map((checkbox) => checkbox.value);
 
-      sessionStorage.setItem("simplyStremioDiscovery", JSON.stringify(discovery));
+      if (!discovery.length) return;
+
       window.location.href = "setup-preferences-era.html";
     });
   </script>
