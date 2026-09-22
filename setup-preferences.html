@@ -336,6 +336,15 @@
     const checkboxes = [...document.querySelectorAll('input[name="genre"]')];
     const continueButton = document.querySelector("#continueButton");
 
+    try {
+      const savedGenres = JSON.parse(sessionStorage.getItem("simplyStremioGenres") || "[]");
+      checkboxes.forEach((checkbox) => {
+        checkbox.checked = savedGenres.includes(checkbox.value);
+      });
+    } catch {
+      // Ignore invalid stored preferences and start with a clean selection.
+    }
+
     function updateContinueState() {
       continueButton.disabled = !checkboxes.some((checkbox) => checkbox.checked);
     }
@@ -343,6 +352,8 @@
     checkboxes.forEach((checkbox) => {
       checkbox.addEventListener("change", updateContinueState);
     });
+
+    updateContinueState();
 
     continueButton.addEventListener("click", () => {
       const genres = checkboxes
