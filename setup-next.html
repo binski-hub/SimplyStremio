@@ -144,7 +144,7 @@
 
       if (provider !== "torbox") {
         if (provider === "none") {
-          window.location.href = "setup-configure.html?provider=none";
+          window.location.href = "take-a-pause.html?provider=none";
         }
         return;
       }
@@ -152,7 +152,7 @@
       if (!apiKey.value.trim()) return;
       sessionStorage.setItem("simplyStremioProvider", provider);
       sessionStorage.setItem("simplyStremioApiKey", apiKey.value.trim());
-      window.location.href = "setup-configure.html?provider=" + encodeURIComponent(provider);
+      window.location.href = "take-a-pause.html?provider=" + encodeURIComponent(provider);
     });
   </script>
 </body>
