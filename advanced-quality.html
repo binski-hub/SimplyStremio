@@ -63,18 +63,23 @@
 </main>
 <footer>SimplyStremio is a configuration tool. It does not provide or host media.</footer>
 <script>
+  const key="simplyStremioAdvancedVideoQuality";
   const form=document.querySelector("#form"),button=document.querySelector("#continue");
+  const saved=JSON.parse(sessionStorage.getItem(key)||"null");
+  if(saved){for(const [name,value] of Object.entries(saved)){const input=document.querySelector(`input[name="${name}"][value="${value}"]`);if(input)input.checked=true;}}
+  function getData(){
+    const data={};
+    for(const name of ["resolution","qualityWeight","size","fallback"]){
+      const selected=document.querySelector(`input[name="${name}"]:checked`);
+      if(selected)data[name]=selected.value;
+    }
+    return data;
+  }
+  function save(){sessionStorage.setItem(key,JSON.stringify(getData()));}
   function ready(){button.disabled=!document.querySelector('input[name="resolution"]:checked')||!document.querySelector('input[name="qualityWeight"]:checked')||!document.querySelector('input[name="size"]:checked')||!document.querySelector('input[name="fallback"]:checked')}
-  form.addEventListener("change",ready);
-  form.addEventListener("submit",e=>{e.preventDefault();if(button.disabled)return;
-    const data={
-      resolution:document.querySelector('input[name="resolution"]:checked').value,
-      qualityWeight:document.querySelector('input[name="qualityWeight"]:checked').value,
-      size:document.querySelector('input[name="size"]:checked').value,
-      fallback:document.querySelector('input[name="fallback"]:checked').value
-    };
-    sessionStorage.setItem("simplyStremioAdvancedVideoQuality",JSON.stringify(data));window.location.href="advanced-picture.html";
-  });
+  form.addEventListener("change",()=>{save();ready();});
+  ready();
+  form.addEventListener("submit",e=>{e.preventDefault();if(button.disabled)return;save();window.location.href="advanced-picture.html";});
 </script>
 </body>
 </html>
