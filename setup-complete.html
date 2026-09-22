@@ -125,6 +125,35 @@
       line-height: 1.55;
     }
 
+    .bonus-panel {
+      margin-top: 20px;
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--panel);
+    }
+
+    .bonus-eyebrow {
+      margin: 0 0 6px;
+      color: var(--accent);
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+    }
+
+    .bonus-panel h2 {
+      margin: 0 0 8px;
+      font-size: 1.35rem;
+      line-height: 1.2;
+    }
+
+    .bonus-panel p:not(.bonus-eyebrow) {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: .94rem;
+      line-height: 1.6;
+    }
+
     .actions {
       display: flex;
       justify-content: space-between;
@@ -191,7 +220,7 @@
   <header>
     <div class="topbar">
       <div class="brand">SimplyStremio</div>
-      <div class="step">Step 4 of 4</div>
+      <div class="step">Step 3 of 3</div>
     </div>
     <div class="progress" aria-label="Setup progress">
       <span class="progress-step"></span>
@@ -219,6 +248,13 @@
         We've kept things simple.<br>
         Because you're not watching if you're scrolling.
       </p>
+    </section>
+
+    <section class="bonus-panel">
+      <p class="bonus-eyebrow">BONUS LEVEL</p>
+      <h2>Feeling adventurous?</h2>
+      <p>You've got the essentials sorted. If you've got a few more minutes, there are 7 extra questions that let you get a little more particular about what turns up.</p>
+      <a class="button" href="advanced-discovery.html">Enter Bonus Level →</a>
     </section>
 
     <div class="actions">
