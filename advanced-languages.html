@@ -64,14 +64,26 @@
 </main>
 <footer>SimplyStremio is a configuration tool. It does not provide or host media.</footer>
 <script>
+  const key="simplyStremioAdvancedLanguages";
   const form=document.querySelector("#form"),button=document.querySelector("#continue");
+  const saved=JSON.parse(sessionStorage.getItem(key)||"null");
+  if(saved){
+    for(const value of saved.languages||[]){const input=document.querySelector(`input[name="language"][value="${value}"]`);if(input)input.checked=true;}
+    for(const [name,value] of Object.entries({subtitles:saved.subtitles,rank:saved.rank})){const input=document.querySelector(`input[name="${name}"][value="${value}"]`);if(input)input.checked=true;}
+  }
+  function getData(){
+    const data={languages:[...document.querySelectorAll('input[name="language"]:checked')].map(x=>x.value)};
+    const subtitles=document.querySelector('input[name="subtitles"]:checked');
+    const rank=document.querySelector('input[name="rank"]:checked');
+    if(subtitles)data.subtitles=subtitles.value;
+    if(rank)data.rank=rank.value;
+    return data;
+  }
+  function save(){sessionStorage.setItem(key,JSON.stringify(getData()));}
   function ready(){button.disabled=!document.querySelector('input[name="language"]:checked')||!document.querySelector('input[name="subtitles"]:checked')||!document.querySelector('input[name="rank"]:checked')}
-  form.addEventListener("change",ready);
-  form.addEventListener("submit",e=>{e.preventDefault();if(button.disabled)return;
-    const languages=[...document.querySelectorAll('input[name="language"]:checked')].map(x=>x.value);
-    const data={languages,subtitles:document.querySelector('input[name="subtitles"]:checked').value,rank:document.querySelector('input[name="rank"]:checked').value};
-    sessionStorage.setItem("simplyStremioAdvancedLanguages",JSON.stringify(data));window.location.href="advanced-quality.html";
-  });
+  form.addEventListener("change",()=>{save();ready();});
+  ready();
+  form.addEventListener("submit",e=>{e.preventDefault();if(button.disabled)return;save();window.location.href="advanced-quality.html";});
 </script>
 </body>
 </html>
