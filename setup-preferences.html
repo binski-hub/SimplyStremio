@@ -349,8 +349,22 @@
       continueButton.disabled = !checkboxes.some((checkbox) => checkbox.checked);
     }
 
+    function saveGenres() {
+      const genres = checkboxes
+        .filter((checkbox) => checkbox.checked)
+        .map((checkbox) => checkbox.value);
+
+      if (genres.length) {
+        sessionStorage.setItem("simplyStremioGenres", JSON.stringify(genres));
+      } else {
+        sessionStorage.removeItem("simplyStremioGenres");
+      }
+
+      updateContinueState();
+    }
+
     checkboxes.forEach((checkbox) => {
-      checkbox.addEventListener("change", updateContinueState);
+      checkbox.addEventListener("change", saveGenres);
     });
 
     updateContinueState();
@@ -362,7 +376,6 @@
 
       if (!genres.length) return;
 
-      sessionStorage.setItem("simplyStremioGenres", JSON.stringify(genres));
       window.location.href = "setup-preferences-backroom.html";
     });
   </script>
