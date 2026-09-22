@@ -188,19 +188,42 @@
     const choices = [...document.querySelectorAll('input[name="era"]')];
     const continueButton = document.querySelector("#continueButton");
 
-    choices.forEach((choice) => {
-      choice.addEventListener("change", () => {
-        continueButton.disabled = false;
+    function updateContinueState() {
+      continueButton.disabled = !choices.some((choice) => choice.checked);
+    }
+
+    function saveEra() {
+      const selected = choices.find((choice) => choice.checked);
+      if (!selected) {
+        sessionStorage.removeItem("simplyStremioEra");
+        updateContinueState();
+        return;
+      }
+
+      sessionStorage.setItem("simplyStremioEra", selected.value);
+      updateContinueState();
+    }
+
+    try {
+      const savedEra = sessionStorage.getItem("simplyStremioEra");
+      choices.forEach((choice) => {
+        choice.checked = choice.value === savedEra;
       });
+    } catch {
+      // Ignore invalid stored preferences and start with a clean selection.
+    }
+
+    choices.forEach((choice) => {
+      choice.addEventListener("change", saveEra);
     });
+
+    updateContinueState();
 
     form.addEventListener("submit", (event) => {
       event.preventDefault();
 
-      const selected = choices.find((choice) => choice.checked);
-      if (!selected) return;
+      if (!choices.some((choice) => choice.checked)) return;
 
-      sessionStorage.setItem("simplyStremioEra", selected.value);
       window.location.href = "setup-preferences-international.html";
     });
   </script>
