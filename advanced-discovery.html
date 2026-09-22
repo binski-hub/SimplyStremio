@@ -44,7 +44,6 @@
       <div class="choices">
         <div class="choice"><input type="radio" id="movies" name="type" value="movies"><label for="movies">Movies</label></div>
         <div class="choice"><input type="radio" id="series" name="type" value="series"><label for="series">Series</label></div>
-        <div class="choice"><input type="radio" id="both" name="type" value="both"><label for="both">Both</label></div>
       </div>
     </section>
 
@@ -57,13 +56,7 @@
 
     <section class="panel"><p class="question">How adventurous should your recommendations be?</p><div class="choices">
       <div class="choice"><input type="radio" id="familiar" name="adventure" value="familiar"><label for="familiar">Mostly familiar</label></div>
-      <div class="choice"><input type="radio" id="balanced" name="adventure" value="balanced"><label for="balanced">A bit of both</label></div>
       <div class="choice"><input type="radio" id="adventurous" name="adventure" value="adventurous"><label for="adventurous">Surprise me</label></div>
-    </div></section>
-
-    <section class="panel"><p class="question">Anything you'd particularly like included?</p><div class="choices checks">
-      <div class="choice"><input type="checkbox" id="international" name="extra" value="international"><label for="international">International films &amp; shows</label></div>
-      <div class="choice"><input type="checkbox" id="anime" name="extra" value="anime"><label for="anime">Anime</label></div>
     </div></section>
 
     <div class="actions"><a class="button secondary" href="take-a-pause.html">← Go back a step</a><button class="button" id="continue" type="submit" disabled>Continue →</button></div>
@@ -75,7 +68,7 @@
   function ready(){button.disabled=!document.querySelector('input[name="type"]:checked')||!document.querySelector('input[name="discovery"]:checked')||!document.querySelector('input[name="adventure"]:checked')}
   form.addEventListener("change",ready);
   form.addEventListener("submit",e=>{e.preventDefault();if(button.disabled)return;
-    const data={type:document.querySelector('input[name="type"]:checked').value,discovery:document.querySelector('input[name="discovery"]:checked').value,adventure:document.querySelector('input[name="adventure"]:checked').value,international:document.querySelector("#international").checked,anime:document.querySelector("#anime").checked};
+    const data={type:document.querySelector('input[name="type"]:checked').value,discovery:document.querySelector('input[name="discovery"]:checked').value,adventure:document.querySelector('input[name="adventure"]:checked').value};
     sessionStorage.setItem("simplyStremioAdvancedDiscovery",JSON.stringify(data));window.location.href="advanced-languages.html";
   });
 </script>
