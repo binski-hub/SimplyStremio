@@ -32,7 +32,15 @@
         <div class="choice"><input type="radio" id="open" name="resolution" value="open"><label for="open">Keep the options open</label></div>
       </div>
     </section>
-
+    <section class="panel">
+      <p class="question">What should happen when your ideal quality isn't available?</p>
+      <div class="choices">
+        <div class="choice"><input type="radio" id="nextbest" name="fallback" value="next-best"><label for="nextbest">Show me the next-best option</label></div>
+        <div class="choice"><input type="radio" id="somefallback" name="fallback" value="some-fallback"><label for="somefallback">Keep a few lower-quality options around</label></div>
+        <div class="choice"><input type="radio" id="strict" name="fallback" value="strict"><label for="strict">I'd rather wait for a good match</label></div>
+        <div class="choice"><input type="radio" id="useful" name="fallback" value="adaptive"><label for="useful">Just give me useful results</label></div>
+      </div>
+    </section>
     <section class="panel featured">
       <p class="question">If 4K and a much better 1080p release are available, which would you rather see?</p>
       <div class="choices">
@@ -42,22 +50,11 @@
       </div>
       <p class="question-note">This helps us understand whether extra resolution or a stronger release matters more to you.</p>
     </section>
-
     <section class="panel">
       <p class="question">Does size really matter?</p>
       <div class="choices">
         <div class="choice"><input type="radio" id="nosize" name="size" value="unrestricted"><label for="nosize">Not at all — give me the best quality</label></div>
         <div class="choice"><input type="radio" id="balancedSize" name="size" value="balanced"><label for="balancedSize">Too big might be a problem</label></div>
-      </div>
-    </section>
-
-    <section class="panel">
-      <p class="question">What should happen when your ideal quality isn't available?</p>
-      <div class="choices">
-        <div class="choice"><input type="radio" id="nextbest" name="fallback" value="next-best"><label for="nextbest">Show me the next-best option</label></div>
-        <div class="choice"><input type="radio" id="somefallback" name="fallback" value="some-fallback"><label for="somefallback">Keep a few lower-quality options around</label></div>
-        <div class="choice"><input type="radio" id="strict" name="fallback" value="strict"><label for="strict">I'd rather wait for a good match</label></div>
-        <div class="choice"><input type="radio" id="useful" name="fallback" value="adaptive"><label for="useful">Just give me useful results</label></div>
       </div>
     </section>
 
