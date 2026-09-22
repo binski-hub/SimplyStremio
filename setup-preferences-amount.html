@@ -165,17 +165,38 @@
       continueButton.disabled = !choices.some((choice) => choice.checked);
     }
 
+    function saveAmount() {
+      const selected = choices.find((choice) => choice.checked);
+      if (!selected) {
+        sessionStorage.removeItem("simplyStremioAmount");
+        updateContinueState();
+        return;
+      }
+
+      sessionStorage.setItem("simplyStremioAmount", selected.value);
+      updateContinueState();
+    }
+
+    try {
+      const savedAmount = sessionStorage.getItem("simplyStremioAmount");
+      choices.forEach((choice) => {
+        choice.checked = choice.value === savedAmount;
+      });
+    } catch {
+      // Ignore invalid stored preferences and start with a clean selection.
+    }
+
     choices.forEach((choice) => {
-      choice.addEventListener("change", updateContinueState);
+      choice.addEventListener("change", saveAmount);
     });
+
+    updateContinueState();
 
     form.addEventListener("submit", (event) => {
       event.preventDefault();
 
-      const selected = choices.find((choice) => choice.checked);
-      if (!selected) return;
+      if (!choices.some((choice) => choice.checked)) return;
 
-      sessionStorage.setItem("simplyStremioAmount", selected.value);
       window.location.href = "setup-complete.html";
     });
   </script>
