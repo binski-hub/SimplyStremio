@@ -190,17 +190,38 @@
       continueButton.disabled = !choices.some((choice) => choice.checked);
     }
 
+    function saveAdventure() {
+      const selected = choices.find((choice) => choice.checked);
+      if (!selected) {
+        sessionStorage.removeItem("simplyStremioAdventure");
+        updateContinueState();
+        return;
+      }
+
+      sessionStorage.setItem("simplyStremioAdventure", selected.value);
+      updateContinueState();
+    }
+
+    try {
+      const savedAdventure = sessionStorage.getItem("simplyStremioAdventure");
+      choices.forEach((choice) => {
+        choice.checked = choice.value === savedAdventure;
+      });
+    } catch {
+      // Ignore invalid stored preferences and start with a clean selection.
+    }
+
     choices.forEach((choice) => {
-      choice.addEventListener("change", updateContinueState);
+      choice.addEventListener("change", saveAdventure);
     });
+
+    updateContinueState();
 
     form.addEventListener("submit", (event) => {
       event.preventDefault();
 
-      const selected = choices.find((choice) => choice.checked);
-      if (!selected) return;
+      if (!choices.some((choice) => choice.checked)) return;
 
-      sessionStorage.setItem("simplyStremioAdventure", selected.value);
       window.location.href = "setup-preferences-amount.html";
     });
   </script>
