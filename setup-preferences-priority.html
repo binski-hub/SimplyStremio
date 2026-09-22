@@ -208,12 +208,39 @@
       continueButton.disabled = !choices.some((choice) => choice.checked) && !mixtureChoice.checked;
     }
 
+    function savePriority() {
+      const selected = mixtureChoice.checked
+        ? ["mixture"]
+        : choices.filter((choice) => choice.checked).map((choice) => choice.value);
+
+      if (selected.length) {
+        sessionStorage.setItem("simplyStremioPriority", JSON.stringify(selected));
+      } else {
+        sessionStorage.removeItem("simplyStremioPriority");
+      }
+
+      updateContinueState();
+    }
+
+    try {
+      const savedPriority = JSON.parse(sessionStorage.getItem("simplyStremioPriority") || "[]");
+      if (savedPriority.includes("mixture")) {
+        mixtureChoice.checked = true;
+      } else {
+        choices.forEach((choice) => {
+          choice.checked = savedPriority.includes(choice.value);
+        });
+      }
+    } catch {
+      // Ignore invalid stored preferences and start with a clean selection.
+    }
+
     choices.forEach((choice) => {
       choice.addEventListener("change", () => {
         if (choice.checked) {
           mixtureChoice.checked = false;
         }
-        updateContinueState();
+        savePriority();
       });
     });
 
@@ -223,19 +250,16 @@
           choice.checked = false;
         });
       }
-      updateContinueState();
+      savePriority();
     });
+
+    updateContinueState();
 
     form.addEventListener("submit", (event) => {
       event.preventDefault();
 
       if (!choices.some((choice) => choice.checked) && !mixtureChoice.checked) return;
 
-      const selected = mixtureChoice.checked
-        ? ["mixture"]
-        : choices.filter((choice) => choice.checked).map((choice) => choice.value);
-
-      sessionStorage.setItem("simplyStremioPriority", JSON.stringify(selected));
       window.location.href = "setup-preferences-adventure.html";
     });
   </script>
