@@ -64,13 +64,17 @@
 const key="simplyStremioAdvancedPicture";
 const saved=JSON.parse(sessionStorage.getItem(key)||"null");
 if(saved){for(const [name,value] of Object.entries(saved)){const input=document.querySelector(`input[name="${name}"][value="${value}"]`);if(input)input.checked=true;}}
-document.getElementById("continue").addEventListener("click",()=>{
+function save(){
  const data={};
  for(const name of ["pictureStyle","pictureWeight","pictureCompatibility"]){
   const selected=document.querySelector(`input[name="${name}"]:checked`);
   if(selected)data[name]=selected.value;
  }
  sessionStorage.setItem(key,JSON.stringify(data));
+}
+document.querySelectorAll('input[name="pictureStyle"],input[name="pictureWeight"],input[name="pictureCompatibility"]').forEach(input=>input.addEventListener("change",save));
+document.getElementById("continue").addEventListener("click",()=>{
+ save();
  window.location.href="advanced-releases.html";
 });
 </script>
