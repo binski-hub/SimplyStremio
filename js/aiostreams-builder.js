@@ -128,27 +128,59 @@ function pictureProfile() {
     .filter(tag => AIO_VISUAL_TAGS.includes(tag));
 }
 
-function sortCriteria({ language, picture, availability, qualityWeight }) {
-  const qualityFirst = qualityWeight === "release-quality";
-  const global = [
-    ...(availability === "high" ? [{key:"cached",direction:"desc"}] : []),
-    ...(qualityFirst
-      ? [{key:"quality",direction:"desc"},{key:"resolution",direction:"desc"}]
-      : [{key:"resolution",direction:"desc"},{key:"quality",direction:"desc"}]),
-    ...(picture.length ? [{key:"visualTag",direction:"desc"}] : []),
-    ...(language.preferredLanguages.length ? [{key:"language",direction:"desc"}] : []),
-    ...(language.preferredSubtitles.length ? [{key:"subtitle",direction:"desc"}] : []),
-    {key:"size",direction:"desc"},
-    {key:"streamType",direction:"desc"}
-  ];
+function sortCriteria({ language, picture, availability, qualityWeight, pictureWeight, resultPriority, releasePreference }) {
+  const cached = {key:"cached",direction:"desc"};
+  const resolution = {key:"resolution",direction:"desc"};
+  const quality = {key:"quality",direction:"desc"};
+  const visual = {key:"visualTag",direction:"desc"};
+  const languageSort = {key:"language",direction:"desc"};
+  const subtitle = {key:"subtitle",direction:"desc"};
+  const sizeAsc = {key:"size",direction:"asc"};
+  const sizeDesc = {key:"size",direction:"desc"};
+  const addon = {key:"addon",direction:"desc"};
 
-  if (!global.some(item => item.key === "cached")) {
-    global.unshift({key:"cached",direction:"desc"});
+  const global = [];
+
+  if (availability === "high") global.push(cached);
+
+  if (releasePreference === "compact") {
+    global.push(resolution, sizeAsc, quality);
+  } else if (qualityWeight === "release-quality" || releasePreference === "quality") {
+    global.push(quality, resolution);
+  } else {
+    global.push(resolution, quality);
   }
 
+  if (picture.length) {
+    if (pictureWeight === "high") global.push(visual);
+    else if (pictureWeight === "medium") global.push(visual);
+  }
+
+  if (resultPriority === "match") {
+    if (language.preferredLanguages.length) global.push(languageSort);
+    if (language.preferredSubtitles.length) global.push(subtitle);
+  } else if (resultPriority === "variety") {
+    global.push(addon);
+  }
+
+  if (picture.length && pictureWeight === "low") global.push(visual);
+  if (language.preferredLanguages.length && resultPriority !== "match") global.push(languageSort);
+  if (language.preferredSubtitles.length && resultPriority !== "match") global.push(subtitle);
+
+  if (releasePreference === "compact") {
+    global.push(sizeAsc);
+  } else if (releasePreference !== "quality") {
+    global.push(sizeDesc);
+  }
+
+  if (availability === "medium") global.push(cached);
+  if (availability === "low" || availability === "none") {
+    if (availability === "low") global.push(cached);
+  }
+
+  if (!global.length) global.push(resolution, quality);
   return { global };
 }
-
 function resultLimits() {
   const results = read("simplyStremioAdvancedResults", {}) || {};
   const releases = read("simplyStremioAdvancedReleases", {}) || {};
@@ -271,8 +303,14 @@ export function buildAioStreamsConfig() {
   const language = languageProfile();
   const picture = pictureProfile();
   const results = read("simplyStremioAdvancedResults", {}) || {};
+  const releases = read("simplyStremioAdvancedReleases", {}) || {};
+  const qualitySettings = read("simplyStremioAdvancedVideoQuality", {}) || {};
+  const pictureSettings = read("simplyStremioAdvancedPicture", {}) || {};
   const availability = results.availability || "low";
-  const qualityWeight = (read("simplyStremioAdvancedVideoQuality", {}) || {}).qualityWeight || "balanced";
+  const qualityWeight = qualitySettings.qualityWeight || "balanced";
+  const resultPriority = results.resultPriority || "balance";
+  const pictureWeight = pictureSettings.pictureWeight || "medium";
+  const releasePreference = releases.releasePreference || "quality";
 
   return {
     formatter: { id: "gdrive" },
@@ -285,7 +323,7 @@ export function buildAioStreamsConfig() {
     preferredLanguages: language.preferredLanguages,
     preferredSubtitles: language.preferredSubtitles,
     preferredVisualTags: picture,
-    sortCriteria: sortCriteria({ language, picture, availability, qualityWeight }),
+    sortCriteria: sortCriteria({ language, picture, availability, qualityWeight, pictureWeight, resultPriority, releasePreference }),
     resultLimits: resultLimits(),
     deduplicator: {
       enabled: true,
