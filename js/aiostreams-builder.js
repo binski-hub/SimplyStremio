@@ -123,11 +123,13 @@ function pictureProfile() {
     .filter(tag => AIO_VISUAL_TAGS.includes(tag));
 }
 
-function sortCriteria({ language, picture, availability }) {
+function sortCriteria({ language, picture, availability, qualityWeight }) {
+  const qualityFirst = qualityWeight === "release-quality";
   const global = [
     ...(availability === "high" ? [{key:"cached",direction:"desc"}] : []),
-    {key:"resolution",direction:"desc"},
-    {key:"quality",direction:"desc"},
+    ...(qualityFirst
+      ? [{key:"quality",direction:"desc"},{key:"resolution",direction:"desc"}]
+      : [{key:"resolution",direction:"desc"},{key:"quality",direction:"desc"}]),
     ...(picture.length ? [{key:"visualTag",direction:"desc"}] : []),
     ...(language.preferredLanguages.length ? [{key:"language",direction:"desc"}] : []),
     ...(language.preferredSubtitles.length ? [{key:"subtitle",direction:"desc"}] : []),
