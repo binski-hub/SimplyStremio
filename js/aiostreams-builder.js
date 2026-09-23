@@ -73,13 +73,13 @@ function qualityProfile() {
   let resolutions = [...AIO_RESOLUTIONS];
   let qualities = [...AIO_QUALITIES];
 
-  if (data.resolution === "4k") {
+  if (data.resolution === "4k-preferred") {
     resolutions = ["2160p","1440p","1080p",...AIO_RESOLUTIONS.filter(x => !["2160p","1440p","1080p"].includes(x))];
   } else if (data.resolution === "1080p") {
     resolutions = ["1080p","2160p","1440p","720p",...AIO_RESOLUTIONS.filter(x => !["1080p","2160p","1440p","720p"].includes(x))];
   }
 
-  if (data.qualityWeight === "source") {
+  if (data.qualityWeight === "release-quality") {
     qualities = ["BluRay REMUX","BluRay","WEB-DL","WEBRip",...AIO_QUALITIES.filter(x => !["BluRay REMUX","BluRay","WEB-DL","WEBRip"].includes(x))];
   }
 
@@ -181,7 +181,7 @@ function catalogModifications() {
   const preferSeries = priority.includes("series") && !priority.includes("mixture");
 
   return movieSeries.flatMap(catalog => [
-    { id: "tmdb-addon." + catalog.id, type: preferSeries ? "movie" : "movie", name: catalog.name, enabled: catalog.enabled && !preferSeries, shuffle: adventure === "surprise" },
+    { id: "simply-tmdb." + catalog.id, type: "movie", name: catalog.name, enabled: catalog.enabled && !preferSeries, shuffle: adventure === "surprise" },
     { id: "tmdb-addon." + catalog.id, type: "series", name: catalog.name, enabled: catalog.enabled && !preferMovies, shuffle: adventure === "surprise" }
   ]);
 }
