@@ -12,6 +12,7 @@
       --muted: #a7adb4; --accent: #f0b35a; --border: #30343a; --border-hover: #555b63;
     }
     * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
     body { margin: 0; min-height: 100vh; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--bg); color: var(--text); }
     main { width: min(760px, calc(100% - 32px)); margin: 0 auto; padding: 12px 0 12px; }
     .topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 40px; }
@@ -28,11 +29,22 @@
     .choice strong { display: block; font-size: 18px; }
     .choice span { display: block; margin-top: 5px; color: var(--muted); font-size: 14px; line-height: 1.4; }
     .choice.selected { border-color: var(--accent); }
+    .other-panel { margin-top: 10px; padding: 18px 20px; border: 1px solid var(--border); border-radius: 14px; background: var(--panel); }
+    .other-panel p { margin: 0 0 14px; color: var(--muted); font-size: 14px; line-height: 1.5; }
+    .other-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 14px; }
+    .other-option { display: flex; align-items: center; gap: 9px; padding: 8px 0; color: var(--text); font-size: 14px; cursor: pointer; }
+    .other-option input { accent-color: var(--accent); }
     .provider-note { margin-top: 18px; color: var(--muted); font-size: 13px; line-height: 1.5; }
     .continue { display: block; width: 100%; margin-top: 18px; padding: 14px 20px; border: 1px solid var(--border); border-radius: 10px; background: var(--panel); color: var(--muted); font: inherit; font-weight: 700; cursor: not-allowed; }
     .continue.ready { border-color: var(--accent); background: var(--accent); color: #17120b; cursor: pointer; }
     footer { margin-top: 28px; color: var(--muted); font-size: 13px; }
-    @media (max-width: 600px) { main { padding: 12px 0 12px; } .topbar { margin-bottom: 40px; } .progress { margin-bottom: 40px; } .choice { padding: 18px; } }
+    @media (max-width: 600px) {
+      main { padding: 12px 0 12px; }
+      .topbar { margin-bottom: 40px; }
+      .progress { margin-bottom: 40px; }
+      .choice { padding: 18px; }
+      .other-options { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -44,30 +56,71 @@
       <span class="progress-step"></span>
       <span class="progress-step"></span>
     </div>
-    <h1>What do you use for your streams?</h1>
+
+    <h1>Which service do you use?</h1>
     <p class="intro">Choose the service you already have. We'll handle the technical details for you.</p>
+
     <div class="choices">
-      <button class="choice" type="button" data-provider="torbox"><strong>TorBox</strong><span>I already have a TorBox account.</span></button>
-      <button class="choice" type="button" data-provider="real-debrid"><strong>Real-Debrid</strong><span>I already have a Real-Debrid account.</span></button>
-      <button class="choice" type="button" data-provider="another"><strong>Another service</strong><span>I use a different compatible debrid service.</span></button>
-      <button class="choice" type="button" data-provider="none"><strong>I don't have one yet</strong><span>Show me what I need before we continue.</span></button>
+      <button class="choice" type="button" data-provider="torbox"><strong>TorBox</strong><span>I already have TorBox.</span></button>
+      <button class="choice" type="button" data-provider="real-debrid"><strong>Real-Debrid</strong><span>I already have Real-Debrid.</span></button>
+      <button class="choice" type="button" data-provider="premiumize"><strong>Premiumize</strong><span>I already have Premiumize.</span></button>
+      <button class="choice" id="otherButton" type="button"><strong>Other</strong><span>I use another compatible service.</span></button>
     </div>
-    <p class="provider-note">Your choice doesn't lock you in. You can change it later.</p>
+
+    <section class="other-panel" id="otherPanel" hidden>
+      <p>Tick the service you use. We'll ask for the details on the next step.</p>
+      <div class="other-options">
+        <label class="other-option"><input type="radio" name="otherProvider" value="alldebrid"> AllDebrid</label>
+        <label class="other-option"><input type="radio" name="otherProvider" value="debrid-link"> Debrid-Link</label>
+        <label class="other-option"><input type="radio" name="otherProvider" value="offcloud"> Offcloud</label>
+        <label class="other-option"><input type="radio" name="otherProvider" value="easydebrid"> EasyDebrid</label>
+        <label class="other-option"><input type="radio" name="otherProvider" value="putio"> Put.io</label>
+        <label class="other-option"><input type="radio" name="otherProvider" value="seedr"> Seedr</label>
+        <label class="other-option"><input type="radio" name="otherProvider" value="pikpak"> PikPak</label>
+        <label class="other-option"><input type="radio" name="otherProvider" value="debrider"> Debrider</label>
+      </div>
+    </section>
+
+    <p class="provider-note">You can change your provider later.</p>
     <button class="continue" id="continueButton" type="button" disabled>Continue →</button>
     <footer>SimplyStremio is a configuration tool. It does not provide or host media.</footer>
   </main>
+
   <script>
     const choices = document.querySelectorAll(".choice");
+    const otherButton = document.querySelector("#otherButton");
+    const otherPanel = document.querySelector("#otherPanel");
+    const otherProviders = document.querySelectorAll('input[name="otherProvider"]');
     const continueButton = document.querySelector("#continueButton");
     let selectedProvider = null;
+
+    function ready() {
+      continueButton.disabled = !selectedProvider;
+      continueButton.classList.toggle("ready", Boolean(selectedProvider));
+    }
 
     choices.forEach((choice) => {
       choice.addEventListener("click", () => {
         choices.forEach((item) => item.classList.remove("selected"));
         choice.classList.add("selected");
-        selectedProvider = choice.dataset.provider;
-        continueButton.disabled = false;
-        continueButton.classList.add("ready");
+
+        if (choice === otherButton) {
+          selectedProvider = null;
+          otherPanel.hidden = false;
+        } else {
+          selectedProvider = choice.dataset.provider;
+          otherPanel.hidden = true;
+          otherProviders.forEach((item) => { item.checked = false; });
+        }
+
+        ready();
+      });
+    });
+
+    otherProviders.forEach((item) => {
+      item.addEventListener("change", () => {
+        selectedProvider = item.value;
+        ready();
       });
     });
 
