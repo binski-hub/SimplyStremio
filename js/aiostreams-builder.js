@@ -50,21 +50,26 @@ function clean(list) {
 
 function serviceConfig() {
   const provider = readText("simplyStremioProvider");
-  const credential = readText("simplyStremioApiKey");
   const definition = SERVICE_CREDENTIALS[provider];
 
   if (!definition) throw new Error("Unsupported provider: " + provider);
 
-  // The current setup page stores one credential string. Providers that
-  // genuinely require multiple fields are rejected rather than mislabelled.
-  if (definition.fields.length !== 1) {
-    throw new Error("Provider credential flow needs multiple fields: " + provider);
+  let credentials = read("simplyStremioProviderCredentials", null);
+  if (!credentials || typeof credentials !== "object") {
+    const legacy = readText("simplyStremioApiKey");
+    credentials = legacy ? { apiKey: legacy } : {};
+  }
+
+  for (const field of definition.fields) {
+    if (!credentials[field]) {
+      throw new Error("Missing " + field + " for " + provider);
+    }
   }
 
   return [{
     id: definition.id,
     enabled: true,
-    credentials: { [definition.fields[0]]: credential }
+    credentials
   }];
 }
 
