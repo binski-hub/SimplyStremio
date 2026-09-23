@@ -265,7 +265,9 @@
     SimplyStremio is a configuration tool. It does not provide or host media.
   </footer>
 
-  <script>
+  <script type="module">
+    import { installToStremio } from "./js/aiostreams-install.js";
+
     const getStored = (key, fallback) => {
       try {
         const value = sessionStorage.getItem(key);
@@ -404,9 +406,7 @@
       <p>${prioritySentence} ${adventureSentence} ${amountSentence}</p>
     `;
 
-    document.querySelector("#addButton").addEventListener("click", () => {
-      alert("The Stremio install link will be connected here next.");
-    });
+    document.querySelector("#addButton").addEventListener("click", installToStremio);
   </script>
 </body>
 </html>
