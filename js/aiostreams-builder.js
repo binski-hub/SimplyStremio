@@ -189,7 +189,7 @@ function catalogModifications() {
 
   return movieSeries.flatMap(catalog => [
     { id: "simply-tmdb." + catalog.id, type: "movie", name: catalog.name, enabled: catalog.enabled && !preferSeries, shuffle: adventure === "surprise" },
-    { id: "tmdb-addon." + catalog.id, type: "series", name: catalog.name, enabled: catalog.enabled && !preferMovies, shuffle: adventure === "surprise" }
+    { id: "simply-tmdb." + catalog.id, type: "series", name: catalog.name, enabled: catalog.enabled && !preferMovies, shuffle: adventure === "surprise" }
   ]);
 }
 
@@ -272,6 +272,7 @@ export function buildAioStreamsConfig() {
   const picture = pictureProfile();
   const results = read("simplyStremioAdvancedResults", {}) || {};
   const availability = results.availability || "low";
+  const qualityWeight = (read("simplyStremioAdvancedVideoQuality", {}) || {}).qualityWeight || "balanced";
 
   return {
     formatter: { id: "gdrive" },
@@ -284,7 +285,7 @@ export function buildAioStreamsConfig() {
     preferredLanguages: language.preferredLanguages,
     preferredSubtitles: language.preferredSubtitles,
     preferredVisualTags: picture,
-    sortCriteria: sortCriteria({ language, picture, availability }),
+    sortCriteria: sortCriteria({ language, picture, availability, qualityWeight }),
     resultLimits: resultLimits(),
     deduplicator: {
       enabled: true,
