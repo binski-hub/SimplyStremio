@@ -36,7 +36,9 @@
 <div class="actions"><a class="button secondary" href="advanced-results.html">← Previous section</a><button class="button primary" type="button" id="continue">Add to Stremio →</button></div>
 </main>
 <footer>SimplyStremio is a configuration tool. It does not provide or host media.</footer>
-<script>
+<script type="module">
+import { installToStremio } from "./js/aiostreams-install.js";
+
 function get(key){try{return JSON.parse(sessionStorage.getItem(key)||"null")}catch{return null}}
 const discovery=get("simplyStremioAdvancedDiscovery");
 const languages=get("simplyStremioAdvancedLanguages");
@@ -54,9 +56,7 @@ if(releases) parts.push("<strong>Releases:</strong> your release, tie-breaker, f
 if(results) parts.push("<strong>Results:</strong> your ordering, variety and control preferences are saved.");
 document.getElementById("summary").innerHTML=parts.length?parts.join("<br>"):"Your preferences will appear here as you make your choices.";
 
-document.getElementById("continue").addEventListener("click",()=>{
- window.location.href="setup-complete.html?mode=advanced";
-});
+document.getElementById("continue").addEventListener("click",installToStremio);
 </script>
 </body>
 </html>
