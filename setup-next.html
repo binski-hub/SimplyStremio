@@ -59,9 +59,8 @@
     <section class="panel">
       <p id="panelText">Your provider should have given you the API key you need. We don't need your account password.</p>
       <form id="providerForm">
-        <label class="field-label" for="apiKey" id="apiKeyLabel">API key</label>
-        <input class="field-input" id="apiKey" name="apiKey" type="password" autocomplete="off" spellcheck="false" required>
-        <p class="help" id="helpText">Paste your provider's API key here.</p>
+        <div id="credentialFields"></div>
+        <p class="help" id="helpText">Your provider credential stays with your SimplyStremio setup and is not displayed back to you.</p>
         <div class="actions">
           <button class="button" type="submit" id="continueButton">Continue →</button>
           <a class="button secondary" href="setup.html">← Change provider</a>
@@ -75,11 +74,9 @@
   <script>
     const provider = new URLSearchParams(window.location.search).get("provider");
     const form = document.querySelector("#providerForm");
-    const apiKey = document.querySelector("#apiKey");
     const heading = document.querySelector("#heading");
-    const intro = document.querySelector("#intro");
     const panelText = document.querySelector("#panelText");
-    const helpText = document.querySelector("#helpText");
+    const credentialFields = document.querySelector("#credentialFields");
 
     const names = {
       torbox: "TorBox",
@@ -95,18 +92,73 @@
       debrider: "Debrider"
     };
 
+    const credentialDefinitions = {
+      offcloud: [
+        ["apiKey", "API key"],
+        ["email", "Email"],
+        ["password", "Password"]
+      ],
+      putio: [
+        ["clientId", "Client ID"],
+        ["token", "Token"]
+      ],
+      pikpak: [
+        ["email", "Email"],
+        ["password", "Password"]
+      ],
+      seedr: [
+        ["encodedToken", "Encoded token"]
+      ]
+    };
+
     const providerName = names[provider] || "your provider";
+    const fields = credentialDefinitions[provider] || [["apiKey", "API key"]];
 
     heading.textContent = "Connect " + providerName + ".";
-    panelText.textContent = "Paste the API key you already have from " + providerName + ". We don't need your account password.";
-    helpText.textContent = "Your API key stays with your SimplyStremio setup and is not displayed back to you.";
+    panelText.textContent = "Enter the provider details you already have from " + providerName + ". We don't need anything beyond the credentials required to connect it.";
+
+    fields.forEach(([id, label]) => {
+      const wrapper = document.createElement("div");
+      wrapper.style.marginBottom = "16px";
+
+      const inputLabel = document.createElement("label");
+      inputLabel.className = "field-label";
+      inputLabel.htmlFor = id;
+      inputLabel.textContent = label;
+
+      const input = document.createElement("input");
+      input.className = "field-input";
+      input.id = id;
+      input.name = id;
+      input.type = "password";
+      input.autocomplete = "off";
+      input.spellcheck = false;
+      input.required = true;
+
+      wrapper.append(inputLabel, input);
+      credentialFields.appendChild(wrapper);
+    });
 
     form.addEventListener("submit", (event) => {
       event.preventDefault();
-      if (!apiKey.value.trim()) return;
+
+      const credentials = {};
+      for (const [id] of fields) {
+        const value = document.getElementById(id).value.trim();
+        if (!value) return;
+        credentials[id] = value;
+      }
 
       sessionStorage.setItem("simplyStremioProvider", provider);
-      sessionStorage.setItem("simplyStremioApiKey", apiKey.value.trim());
+      sessionStorage.setItem("simplyStremioProviderCredentials", JSON.stringify(credentials));
+
+      // Keep the old single-key value for compatibility with earlier saved sessions.
+      if (credentials.apiKey) {
+        sessionStorage.setItem("simplyStremioApiKey", credentials.apiKey);
+      } else {
+        sessionStorage.removeItem("simplyStremioApiKey");
+      }
+
       window.location.href = "take-a-pause.html?provider=" + encodeURIComponent(provider);
     });
   </script>
