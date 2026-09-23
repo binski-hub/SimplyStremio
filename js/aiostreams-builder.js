@@ -208,13 +208,13 @@ function catalogModifications() {
   const amount = readText("simplyStremioAmount", "selection");
   const adventure = readText("simplyStremioAdventure", "balanced");
 
-  const movieSeries = [
-    { id: "tmdb.top", name: "Popular", enabled: true },
-    { id: "tmdb.trending", name: "Trending", enabled: amount !== "simple" },
-    { id: "tmdb.year", name: "Year", enabled: amount !== "simple" },
-    { id: "tmdb.language", name: "Language", enabled: amount === "everything" },
-    { id: "tmdb.search", name: "Search", enabled: amount === "everything" }
-  ];
+  let movieSeries = [
+    { id: "tmdb.top", name: "Popular", enabled: true, weight: priority.includes("popular") ? 0 : 2 },
+    { id: "tmdb.trending", name: "Trending", enabled: amount !== "simple", weight: priority.includes("new") ? 0 : 3 },
+    { id: "tmdb.year", name: "Year", enabled: amount !== "simple", weight: priority.includes("new") ? 1 : 4 },
+    { id: "tmdb.language", name: "Language", enabled: amount === "everything", weight: 5 },
+    { id: "tmdb.search", name: "Search", enabled: amount === "everything", weight: 6 }
+  ].sort((a,b) => a.weight - b.weight);
 
   const preferMovies = priority.includes("movies") && !priority.includes("mixture");
   const preferSeries = priority.includes("series") && !priority.includes("mixture");
