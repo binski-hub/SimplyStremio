@@ -23,7 +23,7 @@ export async function installToStremio() {
     const result = await response.json();
 
     if (!response.ok || !result.success || !result.data?.manifestUrl) {
-      throw new Error(result.error || "SimplyStremio could not finish the setup.");
+      throw new Error(result.error || "CYSE could not finish the setup.");
     }
 
     const { manifestUrl, uuid, encryptedPassword } = result.data;
