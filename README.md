@@ -1,6 +1,10 @@
 # CYSE
 
-**Stremio setup for people who were born in the 1900s.**
+**Configure Your Streaming Experience.**
+
+*Streaming without the headaches.*
+
+Stremio setup for people who were born in the 1900s.
 
 CYSE is a friendly configurator designed to make Stremio setup easier for everyone.
 
