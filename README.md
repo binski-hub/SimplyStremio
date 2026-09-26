@@ -1,14 +1,14 @@
-# SimplyStremio
+# CYSE
 
 **Stremio setup for people who were born in the 1900s.**
 
-SimplyStremio is a friendly configurator designed to make Stremio setup easier for everyone.
+CYSE is a friendly configurator designed to make Stremio setup easier for everyone.
 
 It aims to turn complicated configuration into a simple, guided process — without asking users to understand manifests, filters, templates, APIs, or backend plumbing.
 
 ## The idea
 
-SimplyStremio is the friendly layer.
+CYSE is the friendly layer.
 
 It does not replace the projects that do the complicated work underneath:
 
@@ -18,7 +18,7 @@ It does not replace the projects that do the complicated work underneath:
 - **AIOMetadata** — discovery and catalogue support.
 - **Debrid providers** — the services that provide access to supported sources.
 
-> The complicated stuff already exists. SimplyStremio's job is to make it understandable.
+> The complicated stuff already exists. CYSE's job is to make it understandable.
 
 ## Project status
 
@@ -28,15 +28,15 @@ The project is being built incrementally. The first goal is a polished, simple s
 
 ## Important
 
-SimplyStremio does not provide, host, or distribute movies or television shows.
+CYSE does not provide, host, or distribute movies or television shows.
 
 Users are responsible for the services they connect and for ensuring their use complies with applicable laws and the terms of those services.
 
-SimplyStremio is not affiliated with Stremio, AIOStreams, Tamtaro, AIOMetadata, or any debrid provider.
+CYSE is not affiliated with Stremio, AIOStreams, Tamtaro, AIOMetadata, or any debrid provider.
 
 ## Credits
 
-SimplyStremio builds on the work of the wider Stremio ecosystem.
+CYSE builds on the work of the wider Stremio ecosystem.
 
 Special thanks to:
 
