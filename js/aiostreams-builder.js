@@ -1,4 +1,4 @@
-// SimplyStremio -> AIOStreams configuration translator.
+// CYSE -> AIOStreams configuration translator.
 // This file deliberately contains only the translation layer.
 // The AIOStreams instance and user creation happen server-side.
 
