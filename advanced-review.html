@@ -40,7 +40,6 @@
 import { installToStremio } from "./js/aiostreams-install.js";
 
 function get(key){try{return JSON.parse(sessionStorage.getItem(key)||"null")}catch{return null}}
-const discovery=get("simplyStremioAdvancedDiscovery");
 const languages=get("simplyStremioAdvancedLanguages");
 const quality=get("simplyStremioAdvancedVideoQuality");
 const picture=get("simplyStremioAdvancedPicture");
@@ -48,7 +47,6 @@ const releases=get("simplyStremioAdvancedReleases");
 const results=get("simplyStremioAdvancedResults");
 
 const parts=[];
-if(discovery) parts.push("<strong>Discovery:</strong> your browsing preferences are saved.");
 if(languages) parts.push("<strong>Languages:</strong> your language and subtitle preferences are saved.");
 if(quality) parts.push("<strong>Video quality:</strong> your resolution, quality, size and fallback preferences are saved.");
 if(picture) parts.push("<strong>Picture features:</strong> your HDR, Dolby Vision and compatibility preferences are saved.");
